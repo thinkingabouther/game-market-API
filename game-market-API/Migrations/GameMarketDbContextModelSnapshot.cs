@@ -16,23 +16,6 @@ namespace game_market_API.Migrations
             modelBuilder
                 .HasAnnotation("ProductVersion", "5.0.0-preview.7.20365.15");
 
-            modelBuilder.Entity("game_market_API.Models.Customer", b =>
-                {
-                    b.Property<int>("ID")
-                        .ValueGeneratedOnAdd()
-                        .HasColumnType("INTEGER");
-
-                    b.Property<string>("EMail")
-                        .HasColumnType("TEXT");
-
-                    b.Property<string>("Password")
-                        .HasColumnType("TEXT");
-
-                    b.HasKey("ID");
-
-                    b.ToTable("Customers");
-                });
-
             modelBuilder.Entity("game_market_API.Models.Game", b =>
                 {
                     b.Property<int>("ID")
@@ -70,7 +53,7 @@ namespace game_market_API.Migrations
                         .ValueGeneratedOnAdd()
                         .HasColumnType("INTEGER");
 
-                    b.Property<int?>("CustomerID")
+                    b.Property<int?>("ClientID")
                         .HasColumnType("INTEGER");
 
                     b.Property<int?>("GameID")
@@ -90,7 +73,7 @@ namespace game_market_API.Migrations
 
                     b.HasKey("ID");
 
-                    b.HasIndex("CustomerID");
+                    b.HasIndex("ClientID");
 
                     b.HasIndex("GameID");
 
@@ -115,28 +98,33 @@ namespace game_market_API.Migrations
                     b.ToTable("PaymentSessions");
                 });
 
-            modelBuilder.Entity("game_market_API.Models.Vendor", b =>
+            modelBuilder.Entity("game_market_API.Models.User", b =>
                 {
                     b.Property<int>("ID")
                         .ValueGeneratedOnAdd()
                         .HasColumnType("INTEGER");
 
                     b.Property<string>("Password")
+                        .IsRequired()
                         .HasColumnType("TEXT");
 
-                    b.Property<string>("URL")
+                    b.Property<int>("Role")
+                        .HasColumnType("INTEGER");
+
+                    b.Property<string>("Username")
+                        .IsRequired()
                         .HasColumnType("TEXT");
 
                     b.HasKey("ID");
 
-                    b.ToTable("Vendors");
+                    b.ToTable("Users");
                 });
 
             modelBuilder.Entity("game_market_API.Models.GameKey", b =>
                 {
-                    b.HasOne("game_market_API.Models.Customer", "Customer")
-                        .WithMany("GameKeys")
-                        .HasForeignKey("CustomerID");
+                    b.HasOne("game_market_API.Models.User", "Client")
+                        .WithMany()
+                        .HasForeignKey("ClientID");
 
                     b.HasOne("game_market_API.Models.Game", "Game")
                         .WithMany("GameKeys")
@@ -146,8 +134,8 @@ namespace game_market_API.Migrations
                         .WithMany("GameKeys")
                         .HasForeignKey("PaymentSessionID");
 
-                    b.HasOne("game_market_API.Models.Vendor", "Vendor")
-                        .WithMany("GameKeys")
+                    b.HasOne("game_market_API.Models.User", "Vendor")
+                        .WithMany()
                         .HasForeignKey("VendorID");
                 });
 #pragma warning restore 612, 618

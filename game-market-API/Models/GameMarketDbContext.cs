@@ -4,11 +4,10 @@ namespace game_market_API.Models
 {
     public class GameMarketDbContext : DbContext
     {
-        public DbSet<Customer> Customers { get; set; }
+        public DbSet<User> Users { get; set; }
         public DbSet<Game> Games { get; set; }
         public DbSet<GameKey> GameKeys { get; set; }
         public DbSet<PaymentSession> PaymentSessions { get; set; }
-        public DbSet<Vendor> Vendors { get; set; }
         
         public GameMarketDbContext(DbContextOptions<GameMarketDbContext> options)
             :base(options)
