@@ -2,6 +2,7 @@ using System.Collections;
 using System.Collections.Generic;
 using System.ComponentModel.DataAnnotations;
 using System.Dynamic;
+using System.Text.Json.Serialization;
 
 namespace game_market_API.Models
 {
@@ -10,12 +11,11 @@ namespace game_market_API.Models
         [Key]
         public int ID { get; set; }
         
-        [Microsoft.Build.Framework.Required]
         public string Name { get; set; }
 
-        [Microsoft.Build.Framework.Required]
         public double Price { get; set; }
         
+        [JsonIgnore]
         public virtual ICollection<GameKey> GameKeys { get; set; }
     }
 }

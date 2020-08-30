@@ -49,7 +49,6 @@ namespace game_market_API
                     };
                 });
             services.AddControllers();
-
             services.AddDbContextPool<GameMarketDbContext>(options => options
                 .UseSqlite("Data Source=game-market.db"));
             services.AddScoped<IGameService, GameService>();

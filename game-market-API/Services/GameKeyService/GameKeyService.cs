@@ -2,6 +2,7 @@ using System;
 using System.Collections.Generic;
 using System.Linq;
 using System.Threading.Tasks;
+using game_market_API.DTOs;
 using game_market_API.Models;
 using game_market_API.Utilities;
 using Microsoft.AspNetCore.Mvc;
@@ -29,54 +30,38 @@ namespace game_market_API.Services
             if (gameKey == null) throw new ItemNotFoundException();
             return gameKey;
         }
-        
-        
-        public async Task PutGameKeyAsync(int id, GameKey gameKey)
-        {
-            
-            _context.Entry(gameKey).State = EntityState.Modified;
 
-            try
-            {
-                await _context.SaveChangesAsync();
-            }
-            catch (DbUpdateConcurrencyException)
-            {
-                if (!GameKeyExists(id))
-                {
-                    throw new ItemNotFoundException();
-                }
-                else
-                {
-                    throw;
-                }
-            }
-        }
-        
-        
-        public async Task<GameKey> PostGameKeyAsync(GameKey gameKey)
+        public async Task<GameKey> PostGameKeyAsync(string vendorUserName, GameKeyRequest gameKeyRequest)
         {
+            var gameKey = MapToEntity(vendorUserName, gameKeyRequest);
             _context.GameKeys.Add(gameKey);
             await _context.SaveChangesAsync();
             return gameKey;
         }
 
-        public async Task<ActionResult<GameKey>> DeleteGameKey(int id)
+        public async Task<ActionResult<GameKey>> DeleteGameKey(string vendorUserName, int id)
         {
             var gameKey = await _context.GameKeys.FindAsync(id);
-            if (gameKey == null)
-            {
-                throw new ItemNotFoundException();
-            }
+            if (gameKey == null) throw new ItemNotFoundException();
+            if (gameKey.Vendor.Username != vendorUserName) throw new WrongVendorException();
             _context.GameKeys.Remove(gameKey);
             await _context.SaveChangesAsync();
-
             return gameKey;
         }
 
-        private bool GameKeyExists(int id)
+        private GameKey MapToEntity(string vendorUserName, GameKeyRequest request)
         {
-            return _context.GameKeys.Any(e => e.ID == id);
+            var game = _context.Games.Find(request.GameID);
+            if (game == null) throw new ItemNotFoundException();
+            var vendor = _context.Users.Single(user => user.Username == vendorUserName);
+            return new GameKey
+            {
+                Key = request.Key,
+                Game = game,
+                Vendor = vendor
+            };
         }
+        
+        public class WrongVendorException : Exception {}
     }
 }
