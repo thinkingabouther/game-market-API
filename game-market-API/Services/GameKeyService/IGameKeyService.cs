@@ -13,7 +13,7 @@ namespace game_market_API.Services
 
         public Task<GameKey> GetGameKeyAsync(int id);
         
-        public  Task<GameKey> PostGameKeyAsync(string vendorUserName, GameKeyRequest gameKey);
+        public  Task<GameKey> PostGameKeyAsync(string vendorUserName, GameKeyDto gameKey);
 
         public Task<ActionResult<GameKey>> DeleteGameKey(string vendorUserName, int id);
     }

@@ -23,29 +23,30 @@ namespace game_market_API.Models
 
         private void Seed(ModelBuilder modelBuilder)
         {
+            var sampleUser = new User
+            {
+                ID = -2,
+                Username = "Vasya",
+                Password = "12345",
+                Role = User.VendorRole
+            };
+            modelBuilder.Entity<User>().HasData(sampleUser);   
             modelBuilder.Entity<Game>().HasData(
                 new Game
                 {
                     ID = -1,
                     Name = "Dota 2",
-                    Price = 99
+                    Price = 99,
+                    VendorID = sampleUser.ID
                 },
                 new Game
                 {
                     ID = -2,
                     Name = "Microsoft Flight Simulator",
-                    Price = 4356
+                    Price = 4356,
+                    VendorID = sampleUser.ID
                 }
             );
-            modelBuilder.Entity<User>().HasData(
-                new User
-                {
-                    ID = -1,
-                    Username = "Admin",
-                    Password = "Admin",
-                    Role = User.AdminRole
-                }
-            );   
         }
     }
 } 

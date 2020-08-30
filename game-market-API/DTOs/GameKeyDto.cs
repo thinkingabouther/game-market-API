@@ -2,7 +2,7 @@ using System.ComponentModel.DataAnnotations;
 
 namespace game_market_API.DTOs
 {
-    public class GameKeyRequest
+    public class GameKeyDto
     {
         
         [Required]

@@ -17,15 +17,13 @@ namespace game_market_API.Controllers
     public class GameKeyController : Controller
     {
         private readonly IGameKeyService _gameKeyService;
-
-
         public GameKeyController(IGameKeyService gameKeyService)
         {
             _gameKeyService = gameKeyService;
         }
 
         // GET: api/GameKey
-        [Authorize(Roles = Models.User.AdminRole + "," + Models.User.VendorRole)]
+        [Authorize(Roles = Models.User.VendorRole)]
         [HttpGet]
         public async Task<IEnumerable<GameKey>> GetGameKeys()
         {
@@ -33,7 +31,7 @@ namespace game_market_API.Controllers
             return data;
         }
 
-        [Authorize(Roles = Models.User.AdminRole + "," + Models.User.VendorRole)]
+        [Authorize(Roles = Models.User.VendorRole)]
         // GET: api/GameKey/5
         [HttpGet("{id}")]
         public async Task<ActionResult<GameKey>> GetGameKey(int id)
@@ -46,10 +44,10 @@ namespace game_market_API.Controllers
         [Authorize(Roles = Models.User.VendorRole)]
         // POST: api/GameKey
         [HttpPost]
-        public async Task<ActionResult<GameKey>> PostGameKey(GameKeyRequest gameKeyRequest)
+        public async Task<ActionResult<GameKey>> PostGameKey(GameKeyDto gameKeyDto)
         {
             //TODO: Validation
-            var gameKey = await _gameKeyService.PostGameKeyAsync(User.Identity.Name, gameKeyRequest);
+            var gameKey = await _gameKeyService.PostGameKeyAsync(User.Identity.Name, gameKeyDto);
             return CreatedAtAction("GetGameKey", new {id = gameKey.ID}, gameKey);
         }
 

@@ -3,6 +3,7 @@ using System.Collections.Generic;
 using System.Linq;
 using System.Threading.Tasks;
 using AutoWrapper.Wrappers;
+using game_market_API.DTOs;
 using Microsoft.AspNetCore.Http;
 using Microsoft.AspNetCore.Mvc;
 using Microsoft.EntityFrameworkCore;
@@ -40,18 +41,14 @@ namespace game_market_API.Controllers
             return game;
         }
         
-        [Authorize(Roles = Models.User.AdminRole)]
+        [Authorize(Roles = Models.User.VendorRole)]
         // PUT: api/Game/5
-        [HttpPut("{id}")]
-        public async Task<IActionResult> PutGame(int id, Game game)
+        [HttpPatch("{id}")]
+        public async Task<IActionResult> PatchGame(int id, GameDto game)
         {
             //TODO: Validation
-            if (id != game.ID)
-            {
-                return BadRequest();
-            }
 
-            await _gameService.PutGameAsync(id, game);
+            await _gameService.PatchGameAsync(User.Identity.Name, id, game);
             
             return NoContent();
         }
@@ -62,7 +59,7 @@ namespace game_market_API.Controllers
         public async Task<ActionResult<Game>> PostGame(Game game)
         {
             //TODO: Validation
-            await _gameService.PostGameAsync(game);
+            await _gameService.PostGameAsync(User.Identity.Name, game);
             return CreatedAtAction("GetGame", new { id = game.ID }, game);
         }
         
@@ -71,8 +68,16 @@ namespace game_market_API.Controllers
         [HttpDelete("{id}")]
         public async Task<ActionResult<Game>> DeleteGame(int id)
         {
-            var game = await _gameService.DeleteGame(id);
+            var game = await _gameService.DeleteGame(User.Identity.Name, id);
             return game;
+        }
+        
+        [Authorize(Roles = Models.User.ClientRole)]
+        [HttpPost("Purchase")]
+        public async Task<ActionResult<PaymentSession>> PreparePaymentSession(PurchaseDto purchaseRequest)
+        {
+            var session = await _gameService.PreparePaymentSession(User.Identity.Name, purchaseRequest);
+            return session;
         }
     }
 }

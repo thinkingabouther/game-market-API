@@ -8,7 +8,6 @@ namespace game_market_API.Models
     {
         public const string VendorRole = "Vendor";
         public const string ClientRole = "Client";
-        public const string AdminRole = "Admin";
         [Key]
         public int ID { get; set; }
         

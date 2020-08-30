@@ -54,20 +54,30 @@ namespace game_market_API
             services.AddScoped<IGameService, GameService>();
             services.AddScoped<IUserService, UserService>();
             services.AddScoped<IGameKeyService, GameKeyService>();
+            services.AddSwaggerGen();
         }
 
         // This method gets called by the runtime. Use this method to configure the HTTP request pipeline.
         public void Configure(IApplicationBuilder app, IWebHostEnvironment env)
         {
+            app.UseSwagger();
+
+            // Enable middleware to serve swagger-ui (HTML, JS, CSS, etc.),
+            // specifying the Swagger JSON endpoint.
+            app.UseSwaggerUI(c =>
+            {
+                c.SwaggerEndpoint("/swagger/v1/swagger.json", "My API V1");
+            });
+            
             if (env.IsDevelopment())
             {
                 app.UseDeveloperExceptionPage();
             }
             
-            app.UseApiResponseAndExceptionWrapper(); // Using the library to wrap responses consistently 
+            //app.UseApiResponseAndExceptionWrapper(); // Using the library to wrap responses consistently 
 
             app.UseHttpsRedirection();
-            
+
             app.UseRouting();
             
             app.UseAuthentication();

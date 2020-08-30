@@ -28,22 +28,29 @@ namespace game_market_API.Migrations
                     b.Property<double>("Price")
                         .HasColumnType("REAL");
 
+                    b.Property<int>("VendorID")
+                        .HasColumnType("INTEGER");
+
                     b.HasKey("ID");
+
+                    b.HasIndex("VendorID");
 
                     b.ToTable("Games");
 
                     b.HasData(
                         new
                         {
-                            ID = 1,
+                            ID = -1,
                             Name = "Dota 2",
-                            Price = 99.0
+                            Price = 99.0,
+                            VendorID = -2
                         },
                         new
                         {
-                            ID = 2,
+                            ID = -2,
                             Name = "Microsoft Flight Simulator",
-                            Price = 4356.0
+                            Price = 4356.0,
+                            VendorID = -2
                         });
                 });
 
@@ -68,9 +75,6 @@ namespace game_market_API.Migrations
                     b.Property<int?>("PaymentSessionID")
                         .HasColumnType("INTEGER");
 
-                    b.Property<int?>("VendorID")
-                        .HasColumnType("INTEGER");
-
                     b.HasKey("ID");
 
                     b.HasIndex("ClientID");
@@ -78,8 +82,6 @@ namespace game_market_API.Migrations
                     b.HasIndex("GameID");
 
                     b.HasIndex("PaymentSessionID");
-
-                    b.HasIndex("VendorID");
 
                     b.ToTable("GameKeys");
                 });
@@ -117,7 +119,28 @@ namespace game_market_API.Migrations
 
                     b.HasKey("ID");
 
+                    b.HasIndex("Username")
+                        .IsUnique();
+
                     b.ToTable("Users");
+
+                    b.HasData(
+                        new
+                        {
+                            ID = -2,
+                            Password = "12345",
+                            Role = "Vendor",
+                            Username = "Vasya"
+                        });
+                });
+
+            modelBuilder.Entity("game_market_API.Models.Game", b =>
+                {
+                    b.HasOne("game_market_API.Models.User", "Vendor")
+                        .WithMany()
+                        .HasForeignKey("VendorID")
+                        .OnDelete(DeleteBehavior.Cascade)
+                        .IsRequired();
                 });
 
             modelBuilder.Entity("game_market_API.Models.GameKey", b =>
@@ -133,10 +156,6 @@ namespace game_market_API.Migrations
                     b.HasOne("game_market_API.Models.PaymentSession", null)
                         .WithMany("GameKeys")
                         .HasForeignKey("PaymentSessionID");
-
-                    b.HasOne("game_market_API.Models.User", "Vendor")
-                        .WithMany()
-                        .HasForeignKey("VendorID");
                 });
 #pragma warning restore 612, 618
         }

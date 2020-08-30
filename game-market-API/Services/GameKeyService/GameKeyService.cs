@@ -31,9 +31,9 @@ namespace game_market_API.Services
             return gameKey;
         }
 
-        public async Task<GameKey> PostGameKeyAsync(string vendorUserName, GameKeyRequest gameKeyRequest)
+        public async Task<GameKey> PostGameKeyAsync(string vendorUserName, GameKeyDto gameKeyDto)
         {
-            var gameKey = MapToEntity(vendorUserName, gameKeyRequest);
+            var gameKey = MapToEntity(vendorUserName, gameKeyDto);
             _context.GameKeys.Add(gameKey);
             await _context.SaveChangesAsync();
             return gameKey;
@@ -43,25 +43,22 @@ namespace game_market_API.Services
         {
             var gameKey = await _context.GameKeys.FindAsync(id);
             if (gameKey == null) throw new ItemNotFoundException();
-            if (gameKey.Vendor.Username != vendorUserName) throw new WrongVendorException();
+            if (gameKey.Game.Vendor.Username != vendorUserName) throw new WrongVendorException();
             _context.GameKeys.Remove(gameKey);
             await _context.SaveChangesAsync();
             return gameKey;
         }
 
-        private GameKey MapToEntity(string vendorUserName, GameKeyRequest request)
+        private GameKey MapToEntity(string vendorUserName, GameKeyDto dto)
         {
-            var game = _context.Games.Find(request.GameID);
+            var game = _context.Games.Find(dto.GameID);
             if (game == null) throw new ItemNotFoundException();
             var vendor = _context.Users.Single(user => user.Username == vendorUserName);
             return new GameKey
             {
-                Key = request.Key,
+                Key = dto.Key,
                 Game = game,
-                Vendor = vendor
             };
         }
-        
-        public class WrongVendorException : Exception {}
     }
 }

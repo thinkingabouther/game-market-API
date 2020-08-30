@@ -15,7 +15,5 @@ namespace game_market_API.Models
         
         public virtual User Client { get; set; }
         
-        public virtual User Vendor { get; set; }
-
     }
 }

@@ -35,7 +35,7 @@ namespace game_market_API.Controllers
         }
         
         // GET: api/User/token
-        [HttpGet("Token")]
+        [HttpPost("Token")]
         public async Task<string> GetToken([FromBody]User credentials)
         {
             var data = await _userService.GetToken(credentials);

@@ -15,6 +15,9 @@ namespace game_market_API.Models
 
         public double Price { get; set; }
         
+        public int VendorID { get; set; }
+        public virtual User Vendor { get; set; }
+        
         [JsonIgnore]
         public virtual ICollection<GameKey> GameKeys { get; set; }
     }
