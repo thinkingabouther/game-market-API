@@ -52,11 +52,9 @@ namespace game_market_API
 
             services.AddDbContextPool<GameMarketDbContext>(options => options
                 .UseSqlite("Data Source=game-market.db"));
-            
             services.AddScoped<IGameService, GameService>();
             services.AddScoped<IUserService, UserService>();
-
-
+            services.AddScoped<IGameKeyService, GameKeyService>();
         }
 
         // This method gets called by the runtime. Use this method to configure the HTTP request pipeline.

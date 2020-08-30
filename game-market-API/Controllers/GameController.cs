@@ -8,15 +8,17 @@ using Microsoft.AspNetCore.Mvc;
 using Microsoft.EntityFrameworkCore;
 using game_market_API.Models;
 using game_market_API.Services;
+using Microsoft.AspNetCore.Authorization;
+
+
 
 namespace game_market_API.Controllers
 {
     [Route("api/[controller]")]
     [ApiController]
-    public class GameController : ControllerBase
+    public class GameController : Controller
     {
         private readonly IGameService _gameService;
-
         public GameController(IGameService gameService)
         {
             _gameService = gameService;
@@ -30,7 +32,7 @@ namespace game_market_API.Controllers
             return data;
         }
 
-        // GET: api/Games/5
+        // GET: api/Game/5
         [HttpGet("{id}")]
         public async Task<ActionResult<Game>> GetGame(int id)
         {
@@ -38,7 +40,8 @@ namespace game_market_API.Controllers
             return game;
         }
         
-        // PUT: api/Games/5
+        [Authorize(Roles = Models.User.AdminRole)]
+        // PUT: api/Game/5
         [HttpPut("{id}")]
         public async Task<IActionResult> PutGame(int id, Game game)
         {
@@ -52,8 +55,9 @@ namespace game_market_API.Controllers
             
             return NoContent();
         }
-
-        // POST: api/Games
+        
+        [Authorize(Roles = Models.User.VendorRole)]
+        // POST: api/Game
         [HttpPost]
         public async Task<ActionResult<Game>> PostGame(Game game)
         {
@@ -61,8 +65,9 @@ namespace game_market_API.Controllers
             await _gameService.PostGameAsync(game);
             return CreatedAtAction("GetGame", new { id = game.ID }, game);
         }
-
-        // DELETE: api/Games/5
+        
+        [Authorize(Roles = Models.User.VendorRole)]
+        // DELETE: api/Game/5
         [HttpDelete("{id}")]
         public async Task<ActionResult<Game>> DeleteGame(int id)
         {

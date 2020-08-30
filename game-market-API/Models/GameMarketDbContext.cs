@@ -15,21 +15,37 @@ namespace game_market_API.Models
 
         protected override void OnModelCreating(ModelBuilder modelBuilder)
         {
-            modelBuilder.Entity<Game>().HasData
-            (
+            Seed(modelBuilder);
+            modelBuilder.Entity<User>()
+                .HasIndex(u => u.Username)
+                .IsUnique(true);
+        }
+
+        private void Seed(ModelBuilder modelBuilder)
+        {
+            modelBuilder.Entity<Game>().HasData(
                 new Game
                 {
-                    ID = 1,
+                    ID = -1,
                     Name = "Dota 2",
                     Price = 99
                 },
                 new Game
                 {
-                    ID = 2,
+                    ID = -2,
                     Name = "Microsoft Flight Simulator",
                     Price = 4356
                 }
             );
+            modelBuilder.Entity<User>().HasData(
+                new User
+                {
+                    ID = -1,
+                    Username = "Admin",
+                    Password = "Admin",
+                    Role = User.AdminRole
+                }
+            );   
         }
     }
 } 

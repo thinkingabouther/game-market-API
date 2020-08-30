@@ -3,6 +3,7 @@ using System.Collections.Generic;
 using System.Linq;
 using System.Threading.Tasks;
 using game_market_API.Models;
+using game_market_API.Utilities;
 using Microsoft.AspNetCore.Mvc;
 using Microsoft.EntityFrameworkCore;
 
@@ -25,7 +26,7 @@ namespace game_market_API.Services
         public async Task<Game> GetGameAsync(int id)
         {
             var game = await _context.Games.FindAsync(id);
-            if (game == null) throw new GameNotFoundException();
+            if (game == null) throw new ItemNotFoundException();
             return game;
         }
         
@@ -43,7 +44,7 @@ namespace game_market_API.Services
             {
                 if (!GameExists(id))
                 {
-                    throw new GameNotFoundException();
+                    throw new ItemNotFoundException();
                 }
                 else
                 {
@@ -65,7 +66,7 @@ namespace game_market_API.Services
             var game = await _context.Games.FindAsync(id);
             if (game == null)
             {
-                throw new GameNotFoundException();
+                throw new ItemNotFoundException();
             }
             _context.Games.Remove(game);
             await _context.SaveChangesAsync();
@@ -78,6 +79,4 @@ namespace game_market_API.Services
             return _context.Games.Any(e => e.ID == id);
         }
     }
-    
-    public class GameNotFoundException : Exception {}
 }

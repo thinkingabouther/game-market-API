@@ -6,7 +6,7 @@ using Microsoft.AspNetCore.Mvc;
 namespace game_market_API.Controllers
 {
     [Route("api/[controller]")]
-    public class UserController
+    public class UserController : Controller
     {
         private readonly IUserService _userService;
 
@@ -14,11 +14,22 @@ namespace game_market_API.Controllers
         {
             _userService = userService;
         }
-        // POST: api/User
-        [HttpPost]
-        public async Task<ActionResult<User>> PostUser([FromBody]User credentials)
+        // POST: api/User/Vendor
+        [HttpPost("Vendor")]
+        public async Task<ActionResult<User>> PostVendor([FromBody]User credentials)
         {
             //TODO: Validation
+            credentials.Role = Models.User.VendorRole;
+            var data = await _userService.PostUser(credentials);
+            return data;
+        }
+        
+        // POST: api/User/Client
+        [HttpPost("Client")]
+        public async Task<ActionResult<User>> PostClient([FromBody]User credentials)
+        {
+            //TODO: Validation
+            credentials.Role = Models.User.ClientRole;
             var data = await _userService.PostUser(credentials);
             return data;
         }
