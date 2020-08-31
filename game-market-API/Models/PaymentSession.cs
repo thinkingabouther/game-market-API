@@ -14,6 +14,9 @@ namespace game_market_API.Models
         public bool IsCompleted { get; set; }
         
         public virtual ICollection<GameKey> GameKeys { get; set; }
+        
+        public virtual User Client { get; set; }
+
 
     }
 }

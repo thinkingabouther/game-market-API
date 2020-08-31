@@ -6,6 +6,7 @@ using AutoWrapper;
 using game_market_API.Models;
 using game_market_API.Security;
 using game_market_API.Services;
+using game_market_API.Services.ClientNotifyingService;
 using game_market_API.Services.ClientService;
 using Microsoft.AspNetCore.Authentication.JwtBearer;
 using Microsoft.AspNetCore.Builder;
@@ -56,6 +57,8 @@ namespace game_market_API
             services.AddScoped<IGameKeyService, GameKeyService>();
             services.AddScoped<IPaymentSessionService, PaymentSessionService>();
             services.AddScoped<IAcquiringService, AcquiringService>();
+            services.AddScoped<INotifyingService, ClientNotifyingService>();
+            services.AddScoped<INotifyingService, VendorNotifyingService>();
             services.AddSwaggerGen();
         }
 

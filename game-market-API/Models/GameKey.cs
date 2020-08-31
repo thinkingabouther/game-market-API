@@ -13,7 +13,7 @@ namespace game_market_API.Models
         
         public virtual Game Game { get; set; }
         
-        public virtual User Client { get; set; }
+        public int GameID { get; set; }
         
     }
 }

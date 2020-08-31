@@ -60,10 +60,7 @@ namespace game_market_API.Migrations
                         .ValueGeneratedOnAdd()
                         .HasColumnType("INTEGER");
 
-                    b.Property<int?>("ClientID")
-                        .HasColumnType("INTEGER");
-
-                    b.Property<int?>("GameID")
+                    b.Property<int>("GameID")
                         .HasColumnType("INTEGER");
 
                     b.Property<bool>("IsActivated")
@@ -77,19 +74,36 @@ namespace game_market_API.Migrations
 
                     b.HasKey("ID");
 
-                    b.HasIndex("ClientID");
-
                     b.HasIndex("GameID");
 
                     b.HasIndex("PaymentSessionID");
 
                     b.ToTable("GameKeys");
+
+                    b.HasData(
+                        new
+                        {
+                            ID = -1,
+                            GameID = -1,
+                            IsActivated = false,
+                            Key = "123456"
+                        },
+                        new
+                        {
+                            ID = -2,
+                            GameID = -2,
+                            IsActivated = false,
+                            Key = "12345678"
+                        });
                 });
 
             modelBuilder.Entity("game_market_API.Models.PaymentSession", b =>
                 {
                     b.Property<int>("ID")
                         .ValueGeneratedOnAdd()
+                        .HasColumnType("INTEGER");
+
+                    b.Property<int?>("ClientID")
                         .HasColumnType("INTEGER");
 
                     b.Property<DateTime>("Date")
@@ -99,6 +113,8 @@ namespace game_market_API.Migrations
                         .HasColumnType("INTEGER");
 
                     b.HasKey("ID");
+
+                    b.HasIndex("ClientID");
 
                     b.ToTable("PaymentSessions");
                 });
@@ -148,17 +164,22 @@ namespace game_market_API.Migrations
 
             modelBuilder.Entity("game_market_API.Models.GameKey", b =>
                 {
-                    b.HasOne("game_market_API.Models.User", "Client")
-                        .WithMany()
-                        .HasForeignKey("ClientID");
-
                     b.HasOne("game_market_API.Models.Game", "Game")
                         .WithMany("GameKeys")
-                        .HasForeignKey("GameID");
+                        .HasForeignKey("GameID")
+                        .OnDelete(DeleteBehavior.Cascade)
+                        .IsRequired();
 
                     b.HasOne("game_market_API.Models.PaymentSession", null)
                         .WithMany("GameKeys")
                         .HasForeignKey("PaymentSessionID");
+                });
+
+            modelBuilder.Entity("game_market_API.Models.PaymentSession", b =>
+                {
+                    b.HasOne("game_market_API.Models.User", "Client")
+                        .WithMany()
+                        .HasForeignKey("ClientID");
                 });
 #pragma warning restore 612, 618
         }

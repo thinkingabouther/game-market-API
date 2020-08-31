@@ -10,7 +10,7 @@ namespace game_market_API.Services
     public interface IPaymentSessionService
     {
         public Task<PaymentSession> PreparePaymentSession(string clientUserName, PurchaseDto purchaseDto);
-        public Task<PaymentSession> PerformPayment(PaymentDto paymentDto);
+        public Task<PaymentSession> PerformPayment(string clientUserName, PaymentDto paymentDto);
 
     }
 }

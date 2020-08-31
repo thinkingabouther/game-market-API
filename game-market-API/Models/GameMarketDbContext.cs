@@ -47,6 +47,22 @@ namespace game_market_API.Models
                     VendorID = sampleUser.ID
                 }
             );
+            modelBuilder.Entity<GameKey>().HasData(
+                new GameKey
+                {
+                    ID = -1,
+                    Key = "123456",
+                    GameID = -1,
+                    IsActivated = false
+                },
+                new GameKey
+                {
+                    ID = -2,
+                    Key = "12345678",
+                    GameID = -2,
+                    IsActivated = false
+                }
+            );
         }
     }
 } 
