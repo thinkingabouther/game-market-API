@@ -54,6 +54,8 @@ namespace game_market_API
             services.AddScoped<IGameService, GameService>();
             services.AddScoped<IUserService, UserService>();
             services.AddScoped<IGameKeyService, GameKeyService>();
+            services.AddScoped<IPaymentSessionService, PaymentSessionService>();
+            services.AddScoped<IAcquiringService, AcquiringService>();
             services.AddSwaggerGen();
         }
 
@@ -74,7 +76,7 @@ namespace game_market_API
                 app.UseDeveloperExceptionPage();
             }
             
-            //app.UseApiResponseAndExceptionWrapper(); // Using the library to wrap responses consistently 
+            app.UseApiResponseAndExceptionWrapper(); // Using the library to wrap responses consistently 
 
             app.UseHttpsRedirection();
 

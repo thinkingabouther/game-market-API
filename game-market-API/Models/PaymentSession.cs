@@ -11,6 +11,8 @@ namespace game_market_API.Models
         
         public DateTime Date { get; set; }
         
+        public bool IsCompleted { get; set; }
+        
         public virtual ICollection<GameKey> GameKeys { get; set; }
 
     }

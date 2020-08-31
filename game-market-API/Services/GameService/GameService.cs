@@ -79,37 +79,9 @@ namespace game_market_API.Services
             return game;
         }
 
-        public async Task<PaymentSession> PreparePaymentSession(string clientUserName, PurchaseDto purchaseRequest)
-        {
-            var client = _context.Users.Single(c => c.Username == clientUserName);
-            var game = _context.Games.Find(purchaseRequest.GameID);
-            var availableKeys = game.GameKeys.Where(gameKey => gameKey.IsActivated);
-            var gameKeysArray = availableKeys as GameKey[] ?? availableKeys.ToArray();
-            if (gameKeysArray.Length < purchaseRequest.GameCount) 
-                throw new NotEnoughKeysException();
-            var paymentSession = new PaymentSession
-            {
-                Date = DateTime.Now
-            };
-            for (int i = 0; i < purchaseRequest.GameCount; i++)
-            {
-                paymentSession.GameKeys.Add(gameKeysArray[i]);
-                gameKeysArray[i].IsActivated = true;
-                gameKeysArray[i].Client = client;
-            }
-            _context.PaymentSessions.Add(paymentSession);
-            await _context.SaveChangesAsync();
-            return paymentSession;
-        }
-        
         private bool GameExists(int id)
         {
             return _context.Games.Any(e => e.ID == id);
         }
-    }
-
-    public class NotEnoughKeysException : Exception
-    {
-        
     }
 }

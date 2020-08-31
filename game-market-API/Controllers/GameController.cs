@@ -20,6 +20,7 @@ namespace game_market_API.Controllers
     public class GameController : Controller
     {
         private readonly IGameService _gameService;
+
         public GameController(IGameService gameService)
         {
             _gameService = gameService;
@@ -70,14 +71,6 @@ namespace game_market_API.Controllers
         {
             var game = await _gameService.DeleteGame(User.Identity.Name, id);
             return game;
-        }
-        
-        [Authorize(Roles = Models.User.ClientRole)]
-        [HttpPost("Purchase")]
-        public async Task<ActionResult<PaymentSession>> PreparePaymentSession(PurchaseDto purchaseRequest)
-        {
-            var session = await _gameService.PreparePaymentSession(User.Identity.Name, purchaseRequest);
-            return session;
         }
     }
 }

@@ -18,7 +18,5 @@ namespace game_market_API.Services
         public  Task<Game> PostGameAsync(string vendorUserName, Game game);
 
         public Task<Game> DeleteGame(string vendorUserName, int id);
-        
-        public Task<PaymentSession> PreparePaymentSession(string clientUserName, PurchaseDto purchaseRequest);
     }
 }
