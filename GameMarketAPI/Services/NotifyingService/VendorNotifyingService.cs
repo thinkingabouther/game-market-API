@@ -44,17 +44,24 @@ namespace game_market_API.Services.NotifyingService
         public async Task Notify(PaymentSession session)
         {
             var messageModel = MapToMessage(session);
-            var payload = Encoding.UTF8.GetBytes(JsonConvert.SerializeObject(messageModel));
-            messageModel.Hash = GenerateHash(payload);
+            messageModel.Hash = GenerateHash(messageModel);
             var bodyWithHash = Encoding.UTF8.GetBytes(JsonConvert.SerializeObject(messageModel));
             await Task.Run(() => _channel.BasicPublish(exchange: ExchangeName, routingKey: RoutingKey, basicProperties: null, body: bodyWithHash));
             Console.WriteLine(" [x] Sent {0}", messageModel);
         }
 
-        private string GenerateHash(byte[] message)
+        private string GenerateHash(Message message)
         {
+            var requestBody = new
+            {
+                GameName = message.GameName,
+                KeysCount = message.KeysCount,
+                Take = message.Take,
+                Commission = message.Commission
+            };
+            var payload = Encoding.UTF8.GetBytes(JsonConvert.SerializeObject(requestBody));
             SHA256 sha256Hash = SHA256.Create();
-            byte[] data = sha256Hash.ComputeHash(message);
+            byte[] data = sha256Hash.ComputeHash(payload);
             var sBuilder = new StringBuilder();
             for (int i = 0; i < data.Length; i++)
             {

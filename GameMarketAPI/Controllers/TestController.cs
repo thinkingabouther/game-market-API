@@ -1,3 +1,4 @@
+using System.IO;
 using System.Threading.Tasks;
 using Microsoft.AspNetCore.Mvc;
 
@@ -7,9 +8,14 @@ namespace game_market_API.Controllers
     public class TestController : Controller
     {
         [HttpPost("Test")]
-        public async Task<IActionResult> Test()
+        public async Task<IActionResult> Test([FromBody] string content)
         {
-            return Ok();
+            using (var reader = new StreamReader(Request.Body))
+            {
+                var body = reader.ReadToEnd();
+                // Do something
+            }
+            return Ok(content);
         } 
     }
 }
