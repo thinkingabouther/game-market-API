@@ -61,6 +61,7 @@ namespace game_market_API.Services
                 .Include(s => s.Client)
                 .Include(s => s.GameKeys)
                 .ThenInclude(g => g.Game)
+                .ThenInclude(g => g.Vendor)
                 .Single(s => s.ID == paymentDto.SessionID);
             if (session.Client.Username != clientUserName) throw new WrongClientException();
             if (session.IsCompleted) throw new SessionCompletedException();

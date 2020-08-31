@@ -1,6 +1,10 @@
 ﻿
 Microsoft Visual Studio Solution File, Format Version 12.00
-Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "game-market-API", "game-market-API\game-market-API.csproj", "{1DED5FF2-2890-485F-AD38-48E16EA6F0B4}"
+Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "GameMarketAPI", "GameMarketAPI\GameMarketAPI.csproj", "{1DED5FF2-2890-485F-AD38-48E16EA6F0B4}"
+EndProject
+Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "Common", "Common\Common.csproj", "{F5DD2D1F-3D15-4E67-B766-42710329820E}"
+EndProject
+Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "VendorNotifier", "VendorNotifier\VendorNotifier.csproj", "{972B467C-7D52-47ED-92F1-275B377510D5}"
 EndProject
 Global
 	GlobalSection(SolutionConfigurationPlatforms) = preSolution
@@ -12,5 +16,13 @@ Global
 		{1DED5FF2-2890-485F-AD38-48E16EA6F0B4}.Debug|Any CPU.Build.0 = Debug|Any CPU
 		{1DED5FF2-2890-485F-AD38-48E16EA6F0B4}.Release|Any CPU.ActiveCfg = Release|Any CPU
 		{1DED5FF2-2890-485F-AD38-48E16EA6F0B4}.Release|Any CPU.Build.0 = Release|Any CPU
+		{F5DD2D1F-3D15-4E67-B766-42710329820E}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
+		{F5DD2D1F-3D15-4E67-B766-42710329820E}.Debug|Any CPU.Build.0 = Debug|Any CPU
+		{F5DD2D1F-3D15-4E67-B766-42710329820E}.Release|Any CPU.ActiveCfg = Release|Any CPU
+		{F5DD2D1F-3D15-4E67-B766-42710329820E}.Release|Any CPU.Build.0 = Release|Any CPU
+		{972B467C-7D52-47ED-92F1-275B377510D5}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
+		{972B467C-7D52-47ED-92F1-275B377510D5}.Debug|Any CPU.Build.0 = Debug|Any CPU
+		{972B467C-7D52-47ED-92F1-275B377510D5}.Release|Any CPU.ActiveCfg = Release|Any CPU
+		{972B467C-7D52-47ED-92F1-275B377510D5}.Release|Any CPU.Build.0 = Release|Any CPU
 	EndGlobalSection
 EndGlobal
