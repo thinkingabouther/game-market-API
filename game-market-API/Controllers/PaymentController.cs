@@ -4,7 +4,7 @@ using System.Threading.Tasks;
 using game_market_API.DTOs;
 using game_market_API.Models;
 using game_market_API.Services;
-using game_market_API.Services.ClientNotifyingService;
+using game_market_API.Services.NotifyingService;
 using Microsoft.AspNetCore.Authorization;
 using Microsoft.AspNetCore.Mvc;
 using Microsoft.Extensions.DependencyInjection;

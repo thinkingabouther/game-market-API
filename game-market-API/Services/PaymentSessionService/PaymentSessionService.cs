@@ -55,12 +55,13 @@ namespace game_market_API.Services
         {
             
             var isValid = ValidateCardNumber(paymentDto.CardNumber);
-            var session = _context.PaymentSessions
+            var session = _context.PaymentSessions.Find(paymentDto.SessionID);
+            if (session == null) throw new ItemNotFoundException();
+            session = _context.PaymentSessions
                 .Include(s => s.Client)
                 .Include(s => s.GameKeys)
                 .ThenInclude(g => g.Game)
                 .Single(s => s.ID == paymentDto.SessionID);
-            if (session == null) throw new ItemNotFoundException();
             if (session.Client.Username != clientUserName) throw new WrongClientException();
             if (session.IsCompleted) throw new SessionCompletedException();
             
