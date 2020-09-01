@@ -116,23 +116,7 @@ namespace game_market_API
         public void Configure(IApplicationBuilder app, IWebHostEnvironment env, RedisLoggingService redisService)
         {
             app.UseExceptionHandler("/error");
-
-            app.UseSwagger();
             
-            app.UseSwaggerUI(c =>
-            {
-                c.SwaggerEndpoint("/swagger/v1/swagger.json", "game-store-API");
-            });
-            
-            // app.UseApiResponseAndExceptionWrapper(new AutoWrapperOptions
-            // {
-            //     IsApiOnly = false, 
-            //     WrapWhenApiPathStartsWith = "/api",
-            //     ShowStatusCode = true,
-            //     UseApiProblemDetailsException = true
-            // }); // using AutoWrapper to wrap responses and exceptions consistently
-            
-
             app.UseHttpsRedirection();
             
             app.UseRouting();
