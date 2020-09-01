@@ -27,10 +27,17 @@ namespace game_market_API.Services.ClientService
             {
                 Password = credentials.Password,
                 Username = credentials.UserName,
-                Role = credentials.isVendor ? User.VendorRole : User.ClientRole
+                Role = credentials.IsVendor ? User.VendorRole : User.ClientRole
             };
             _context.Users.Add(user);
-            await _context.SaveChangesAsync();
+            try
+            {
+                await _context.SaveChangesAsync();
+            }
+            catch (DbUpdateException)
+            {
+                throw new UsernameUnavailableException();
+            }
             return user;
         }
 
@@ -76,5 +83,10 @@ namespace game_market_API.Services.ClientService
 
     public class UserNotFoundException : Exception
     {
+    }
+
+    public class UsernameUnavailableException : Exception
+    {
+        
     }
 }

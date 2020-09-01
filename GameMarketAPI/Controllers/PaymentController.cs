@@ -13,6 +13,7 @@ using Microsoft.Extensions.DependencyInjection;
 
 namespace game_market_API.Controllers
 {
+    [ApiController]
     [Route("api/[controller]")]
     public class PaymentController : Controller
     {

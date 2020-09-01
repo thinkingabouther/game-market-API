@@ -6,6 +6,7 @@ using Microsoft.AspNetCore.Mvc;
 
 namespace game_market_API.Controllers
 {
+    [ApiController]
     [Route("api/[controller]")]
     public class UserController : Controller
     {
@@ -17,7 +18,7 @@ namespace game_market_API.Controllers
         }
         // POST: api/User/User
         [HttpPost]
-        public async Task<ActionResult<User>> PostUser(UserCredentialsDto userCredentialsDto)
+        public async Task<ActionResult<User>> PostUser([FromBody] UserCredentialsDto userCredentialsDto)
         {
             var data = await _userService.PostUser(userCredentialsDto);
             return data;

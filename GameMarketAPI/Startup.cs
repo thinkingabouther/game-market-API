@@ -4,6 +4,8 @@ using System.Linq;
 using System.Threading.Tasks;
 using AutoMapper;
 using AutoWrapper;
+using AutoWrapper.Extensions;
+using AutoWrapper.Wrappers;
 using game_market_API.Models;
 using game_market_API.Security;
 using game_market_API.Services;
@@ -52,6 +54,10 @@ namespace game_market_API
                 });
             services.AddAutoMapper(typeof(Startup));
             services.AddControllers();
+            services.Configure<ApiBehaviorOptions>(options =>
+            {
+                options.InvalidModelStateResponseFactory = context => throw new ApiProblemDetailsException(context.ModelState);
+            });
             services.AddDbContextPool<GameMarketDbContext>(options => options
                 .UseSqlite("Data Source=game-market.db"));
             services.AddScoped<IGameService, GameService>();
@@ -81,7 +87,7 @@ namespace game_market_API
                 app.UseDeveloperExceptionPage();
             }
             
-            app.UseApiResponseAndExceptionWrapper(); // Using the library to wrap responses consistently 
+            app.UseApiResponseAndExceptionWrapper(new AutoWrapperOptions { UseApiProblemDetailsException = true }); 
 
             app.UseHttpsRedirection();
 

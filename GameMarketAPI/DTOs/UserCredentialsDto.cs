@@ -9,6 +9,6 @@ namespace game_market_API.DTOs
         [Required]
         public string Password { get; set; }
         [Required]
-        public bool isVendor { get; set; }
+        public bool IsVendor { get; set; }
     }
 }
