@@ -52,6 +52,19 @@ namespace game_market_API.Services.NotifyingService
 
         private string GenerateHash(Message message)
         {
+            var data = GetPayloadWithSalt(message);
+            MD5 md5 = new MD5CryptoServiceProvider();
+            data = md5.ComputeHash(data);
+            var sBuilder = new StringBuilder();
+            for (int i = 0; i < data.Length; i++)
+            {
+                sBuilder.Append(data[i].ToString("x2"));
+            }
+            return sBuilder.ToString();        
+        }
+
+        private byte[] GetPayloadWithSalt(Message message)
+        {
             var requestBody = new
             {
                 GameName = message.GameName,
@@ -59,16 +72,19 @@ namespace game_market_API.Services.NotifyingService
                 Take = message.Take,
                 Commission = message.Commission
             };
+            string salt = _configuration.GetSection("Settings").GetSection("HashingSecret").Value;
+            var saltBytes = Encoding.UTF8.GetBytes(salt);
+
             var payload = Encoding.UTF8.GetBytes(JsonConvert.SerializeObject(requestBody));
-            SHA256 sha256Hash = SHA256.Create();
-            byte[] data = sha256Hash.ComputeHash(payload);
-            var sBuilder = new StringBuilder();
-            for (int i = 0; i < data.Length; i++)
-            {
-                sBuilder.Append(data[i].ToString("x2"));
-            }
-            return sBuilder.ToString();        
-        } 
+            var data = new byte[payload.Length + saltBytes.Length];
+            
+            for (int i = 0; i < payload.Length; i++)
+                data[i] = payload[i];
+ 
+            for (int i = 0; i < saltBytes.Length; i++)
+                data[payload.Length + i] = saltBytes[i];
+            return data;
+        }
         
         private Message MapToMessage(PaymentSession session)
         {
