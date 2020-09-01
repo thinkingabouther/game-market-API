@@ -18,4 +18,4 @@ FROM mcr.microsoft.com/dotnet/core/aspnet:3.1 AS runtime
 WORKDIR /app
 COPY --from=publish /src/publish .
 # heroku uses the following
-CMD ASPNETCORE_URLS=http://*:$PORT dotnet GameMarketAPI.dll
+ENTRYPOINT ["dotnet", "GameMarketAPI.dll", "--urls", "http://*:5000;http://*:5001"]
