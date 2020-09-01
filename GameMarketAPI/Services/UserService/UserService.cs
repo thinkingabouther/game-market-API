@@ -4,6 +4,7 @@ using System.IdentityModel.Tokens.Jwt;
 using System.Linq;
 using System.Security.Claims;
 using System.Threading.Tasks;
+using game_market_API.DTOs;
 using game_market_API.Models;
 using game_market_API.Security;
 using Microsoft.EntityFrameworkCore;
@@ -20,11 +21,17 @@ namespace game_market_API.Services.ClientService
             _context = context;
         }
 
-        public async Task<User> PostUser(User credentials)
+        public async Task<User> PostUser(UserCredentialsDto credentials)
         {
-            _context.Users.Add(credentials);
+            var user = new User
+            {
+                Password = credentials.Password,
+                Username = credentials.UserName,
+                Role = credentials.isVendor ? User.VendorRole : User.ClientRole
+            };
+            _context.Users.Add(user);
             await _context.SaveChangesAsync();
-            return credentials;
+            return user;
         }
 
         public async Task<string> GetToken(User credentials)

@@ -1,10 +1,13 @@
 using System;
+using System.Collections;
 using System.Collections.Generic;
 using System.Linq;
 using System.Threading.Tasks;
+using AutoMapper;
 using game_market_API.DTOs;
 using game_market_API.Models;
 using game_market_API.Utilities;
+using game_market_API.ViewModels;
 using Microsoft.AspNetCore.Mvc;
 using Microsoft.EntityFrameworkCore;
 
@@ -14,21 +17,28 @@ namespace game_market_API.Services
     {
         private readonly GameMarketDbContext _context;
 
-        public GameService(GameMarketDbContext context)
+        private readonly IMapper _mapper;
+
+        public GameService(GameMarketDbContext context, IMapper mapper)
         {
             _context = context;
+            _mapper = mapper;
         }
 
-        public async Task<IEnumerable<Game>> GetGamesAsync()
+        public async Task<IEnumerable<GameViewModel>> GetGamesAsync()
         {
-            return await _context.Games.ToListAsync();
+            var data = _context.Games
+                .Include(g => g.Vendor)
+                .Include(g => g.GameKeys)
+                .ToListAsync();
+            return _mapper.Map<IEnumerable<Game>, IEnumerable<GameViewModel>>(await data);
         }
 
-        public async Task<Game> GetGameAsync(int id)
+        public async Task<GameViewModel> GetGameAsync(int id)
         {
             var game = await _context.Games.FindAsync(id);
             if (game == null) throw new ItemNotFoundException();
-            return game;
+            return _mapper.Map<GameViewModel>(game);
         }
         
         
@@ -57,16 +67,16 @@ namespace game_market_API.Services
         }
         
         
-        public async Task<Game> PostGameAsync(string vendorUserName, Game game)
+        public async Task<GameViewModel> PostGameAsync(string vendorUserName, Game game)
         {
             var vendor = _context.Users.Single(u => u.Username == vendorUserName);
             game.Vendor = vendor;
             _context.Games.Add(game);
             await _context.SaveChangesAsync();
-            return game;
+            return _mapper.Map<GameViewModel>(game);
         }
 
-        public async Task<Game> DeleteGame(string vendorUserName, int id)
+        public async Task<GameViewModel> DeleteGame(string vendorUserName, int id)
         {
             var game = _context.Games.Include("Vendor").Single(game => game.ID == id);
             if (game == null)
@@ -76,7 +86,7 @@ namespace game_market_API.Services
             if (game.Vendor.Username != vendorUserName) throw new WrongVendorException();
             _context.Games.Remove(game);
             await _context.SaveChangesAsync();
-            return game;
+            return _mapper.Map<GameViewModel>(game);
         }
 
         private bool GameExists(int id)

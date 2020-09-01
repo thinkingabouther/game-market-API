@@ -8,6 +8,7 @@ using Microsoft.AspNetCore.Mvc;
 using Microsoft.EntityFrameworkCore;
 using game_market_API.Models;
 using game_market_API.Services;
+using game_market_API.ViewModels;
 using Microsoft.AspNetCore.Authorization;
 
 namespace game_market_API.Controllers
@@ -25,18 +26,18 @@ namespace game_market_API.Controllers
         // GET: api/GameKey
         [Authorize(Roles = Models.User.VendorRole)]
         [HttpGet]
-        public async Task<IEnumerable<GameKey>> GetGameKeys()
+        public async Task<IEnumerable<GameKeyViewModel>> GetGameKeys()
         {
-            var data = await _gameKeyService.GetGameKeysAsync();
+            var data = await _gameKeyService.GetGameKeysAsync(User.Identity.Name);
             return data;
         }
 
         [Authorize(Roles = Models.User.VendorRole)]
         // GET: api/GameKey/5
         [HttpGet("{id}")]
-        public async Task<ActionResult<GameKey>> GetGameKey(int id)
+        public async Task<ActionResult<GameKeyViewModel>> GetGameKey(int id)
         {
-            var game = await _gameKeyService.GetGameKeyAsync(id);
+            var game = await _gameKeyService.GetGameKeyAsync(User.Identity.Name, id);
             return game;
         }
         
@@ -44,7 +45,7 @@ namespace game_market_API.Controllers
         [Authorize(Roles = Models.User.VendorRole)]
         // POST: api/GameKey
         [HttpPost]
-        public async Task<ActionResult<GameKey>> PostGameKey(GameKeyDto gameKeyDto)
+        public async Task<ActionResult<GameKeyViewModel>> PostGameKey(GameKeyDto gameKeyDto)
         {
             //TODO: Validation
             var gameKey = await _gameKeyService.PostGameKeyAsync(User.Identity.Name, gameKeyDto);
@@ -54,12 +55,10 @@ namespace game_market_API.Controllers
         [Authorize(Roles = Models.User.VendorRole)]
         // DELETE: api/GameKey/5
         [HttpDelete("{id}")]
-        public async Task<ActionResult<GameKey>> DeleteGame(int id)
+        public async Task<ActionResult<GameKeyViewModel>> DeleteGame(int id)
         {
             var gameKey = await _gameKeyService.DeleteGameKey(User.Identity.Name, id);
             return gameKey;
         }
-
-
     }
 }

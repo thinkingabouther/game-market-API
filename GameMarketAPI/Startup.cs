@@ -2,6 +2,7 @@ using System;
 using System.Collections.Generic;
 using System.Linq;
 using System.Threading.Tasks;
+using AutoMapper;
 using AutoWrapper;
 using game_market_API.Models;
 using game_market_API.Security;
@@ -49,6 +50,7 @@ namespace game_market_API
                         ValidateIssuerSigningKey = true,
                     };
                 });
+            services.AddAutoMapper(typeof(Startup));
             services.AddControllers();
             services.AddDbContextPool<GameMarketDbContext>(options => options
                 .UseSqlite("Data Source=game-market.db"));

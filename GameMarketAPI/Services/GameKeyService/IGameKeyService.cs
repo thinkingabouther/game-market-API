@@ -2,6 +2,7 @@ using System.Collections.Generic;
 using System.Threading.Tasks;
 using game_market_API.DTOs;
 using game_market_API.Models;
+using game_market_API.ViewModels;
 using Microsoft.AspNetCore.Mvc;
 using Microsoft.EntityFrameworkCore;
 
@@ -9,12 +10,12 @@ namespace game_market_API.Services
 {
     public interface IGameKeyService
     {
-        public Task<IEnumerable<GameKey>> GetGameKeysAsync();
+        public Task<IEnumerable<GameKeyViewModel>> GetGameKeysAsync(string vendorUserName);
 
-        public Task<GameKey> GetGameKeyAsync(int id);
+        public Task<GameKeyViewModel> GetGameKeyAsync(string vendorUserName, int id);
         
-        public  Task<GameKey> PostGameKeyAsync(string vendorUserName, GameKeyDto gameKey);
+        public  Task<GameKeyViewModel> PostGameKeyAsync(string vendorUserName, GameKeyDto gameKey);
 
-        public Task<ActionResult<GameKey>> DeleteGameKey(string vendorUserName, int id);
+        public Task<ActionResult<GameKeyViewModel>> DeleteGameKey(string vendorUserName, int id);
     }
 }

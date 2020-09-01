@@ -1,4 +1,5 @@
 using System.Threading.Tasks;
+using game_market_API.DTOs;
 using game_market_API.Models;
 using game_market_API.Services.ClientService;
 using Microsoft.AspNetCore.Mvc;
@@ -14,26 +15,14 @@ namespace game_market_API.Controllers
         {
             _userService = userService;
         }
-        // POST: api/User/Vendor
-        [HttpPost("Vendor")]
-        public async Task<ActionResult<User>> PostVendor([FromBody]User credentials)
+        // POST: api/User/User
+        [HttpPost]
+        public async Task<ActionResult<User>> PostUser(UserCredentialsDto userCredentialsDto)
         {
-            //TODO: Validation
-            credentials.Role = Models.User.VendorRole;
-            var data = await _userService.PostUser(credentials);
+            var data = await _userService.PostUser(userCredentialsDto);
             return data;
         }
-        
-        // POST: api/User/Client
-        [HttpPost("Client")]
-        public async Task<ActionResult<User>> PostClient([FromBody]User credentials)
-        {
-            //TODO: Validation
-            credentials.Role = Models.User.ClientRole;
-            var data = await _userService.PostUser(credentials);
-            return data;
-        }
-        
+
         // GET: api/User/token
         [HttpPost("Token")]
         public async Task<string> GetToken([FromBody]User credentials)

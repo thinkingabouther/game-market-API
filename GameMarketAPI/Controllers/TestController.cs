@@ -4,18 +4,18 @@ using Microsoft.AspNetCore.Mvc;
 
 namespace game_market_API.Controllers
 {
+    [ApiExplorerSettings(IgnoreApi = true)]
     [Route("api/[controller]")]
     public class TestController : Controller
     {
-        [HttpPost("Test")]
+        [HttpPost]
         public async Task<IActionResult> Test([FromBody] string content)
         {
             using (var reader = new StreamReader(Request.Body))
             {
                 var body = reader.ReadToEnd();
-                // Do something
+                return Ok(body);
             }
-            return Ok(content);
         } 
     }
 }

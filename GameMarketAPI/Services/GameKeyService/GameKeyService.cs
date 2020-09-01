@@ -2,9 +2,11 @@ using System;
 using System.Collections.Generic;
 using System.Linq;
 using System.Threading.Tasks;
+using AutoMapper;
 using game_market_API.DTOs;
 using game_market_API.Models;
 using game_market_API.Utilities;
+using game_market_API.ViewModels;
 using Microsoft.AspNetCore.Mvc;
 using Microsoft.EntityFrameworkCore;
 
@@ -13,40 +15,54 @@ namespace game_market_API.Services
     public class GameKeyService : IGameKeyService
     {
         private readonly GameMarketDbContext _context;
+        private IMapper _mapper;
 
-        public GameKeyService(GameMarketDbContext context)
+        public GameKeyService(GameMarketDbContext context, IMapper mapper)
         {
             _context = context;
+            _mapper = mapper;
         }
 
-        public async Task<IEnumerable<GameKey>> GetGameKeysAsync()
+        public async Task<IEnumerable<GameKeyViewModel>> GetGameKeysAsync(string vendorUserName)
         {
-            return await _context.GameKeys.ToListAsync();
+            var data= _context.GameKeys
+                .Include(key => key.Game)
+                .ThenInclude(g => g.Vendor)
+                .Where(key => key.Game.Vendor.Username == vendorUserName)
+                .ToListAsync();
+            return _mapper.Map<IEnumerable<GameKey>, IEnumerable<GameKeyViewModel>>(await data);
         }
 
-        public async Task<GameKey> GetGameKeyAsync(int id)
+        public async Task<GameKeyViewModel> GetGameKeyAsync(string vendorUserName, int id)
         {
-            var gameKey = await _context.GameKeys.FindAsync(id);
+            var gameKey = await Task.Run(() => _context.GameKeys
+                .Include(key => key.Game)
+                .ThenInclude(g => g.Vendor)
+                .Single(key => key.ID == id));
             if (gameKey == null) throw new ItemNotFoundException();
-            return gameKey;
+            if (gameKey.Game.Vendor.Username != vendorUserName) throw new WrongVendorException();
+            return _mapper.Map<GameKeyViewModel>(gameKey);
         }
 
-        public async Task<GameKey> PostGameKeyAsync(string vendorUserName, GameKeyDto gameKeyDto)
+        public async Task<GameKeyViewModel> PostGameKeyAsync(string vendorUserName, GameKeyDto gameKeyDto)
         {
             var gameKey = MapToEntity(vendorUserName, gameKeyDto);
             _context.GameKeys.Add(gameKey);
             await _context.SaveChangesAsync();
-            return gameKey;
+            return _mapper.Map<GameKeyViewModel>(gameKey);
         }
 
-        public async Task<ActionResult<GameKey>> DeleteGameKey(string vendorUserName, int id)
+        public async Task<ActionResult<GameKeyViewModel>> DeleteGameKey(string vendorUserName, int id)
         {
-            var gameKey = await _context.GameKeys.FindAsync(id);
+            var gameKey = await Task.Run(() => _context.GameKeys
+                .Include(key => key.Game)
+                .ThenInclude(g => g.Vendor)
+                .Single(key => key.ID == id));
             if (gameKey == null) throw new ItemNotFoundException();
             if (gameKey.Game.Vendor.Username != vendorUserName) throw new WrongVendorException();
             _context.GameKeys.Remove(gameKey);
             await _context.SaveChangesAsync();
-            return gameKey;
+            return _mapper.Map<GameKeyViewModel>(gameKey);
         }
 
         private GameKey MapToEntity(string vendorUserName, GameKeyDto dto)

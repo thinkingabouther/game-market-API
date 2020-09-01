@@ -9,6 +9,7 @@ using Microsoft.AspNetCore.Mvc;
 using Microsoft.EntityFrameworkCore;
 using game_market_API.Models;
 using game_market_API.Services;
+using game_market_API.ViewModels;
 using Microsoft.AspNetCore.Authorization;
 
 
@@ -28,7 +29,7 @@ namespace game_market_API.Controllers
 
         // GET: api/Games
         [HttpGet]
-        public async Task<IEnumerable<Game>> GetGames()
+        public async Task<IEnumerable<GameViewModel>> GetGames()
         {
             var data = await _gameService.GetGamesAsync();
             return data;
@@ -36,7 +37,7 @@ namespace game_market_API.Controllers
 
         // GET: api/Game/5
         [HttpGet("{id}")]
-        public async Task<ActionResult<Game>> GetGame(int id)
+        public async Task<ActionResult<GameViewModel>> GetGame(int id)
         {
             var game = await _gameService.GetGameAsync(id);
             return game;
@@ -57,7 +58,7 @@ namespace game_market_API.Controllers
         [Authorize(Roles = Models.User.VendorRole)]
         // POST: api/Game
         [HttpPost]
-        public async Task<ActionResult<Game>> PostGame(Game game)
+        public async Task<ActionResult<GameViewModel>> PostGame(Game game)
         {
             //TODO: Validation
             await _gameService.PostGameAsync(User.Identity.Name, game);
@@ -67,7 +68,7 @@ namespace game_market_API.Controllers
         [Authorize(Roles = Models.User.VendorRole)]
         // DELETE: api/Game/5
         [HttpDelete("{id}")]
-        public async Task<ActionResult<Game>> DeleteGame(int id)
+        public async Task<ActionResult<GameViewModel>> DeleteGame(int id)
         {
             var game = await _gameService.DeleteGame(User.Identity.Name, id);
             return game;

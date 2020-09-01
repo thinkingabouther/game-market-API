@@ -1,10 +1,12 @@
 using System.Collections;
 using System.Collections.Generic;
 using System.Threading.Tasks;
+using AutoMapper;
 using game_market_API.DTOs;
 using game_market_API.Models;
 using game_market_API.Services;
 using game_market_API.Services.NotifyingService;
+using game_market_API.ViewModels;
 using Microsoft.AspNetCore.Authorization;
 using Microsoft.AspNetCore.Mvc;
 using Microsoft.Extensions.DependencyInjection;
@@ -27,7 +29,7 @@ namespace game_market_API.Controllers
         // POST: api/Payment/Prepare
         [Authorize(Roles = Models.User.ClientRole)]
         [HttpPost("Prepare")]
-        public async Task<ActionResult<PaymentSession>> PreparePaymentSession([FromBody] PurchaseDto purchaseRequest)
+        public async Task<ActionResult<PaymentSessionViewModel>> PreparePaymentSession([FromBody] PurchaseDto purchaseRequest)
         {
             var session = await _paymentSessionService.PreparePaymentSession(User.Identity.Name, purchaseRequest);
             return session;
@@ -36,14 +38,15 @@ namespace game_market_API.Controllers
         // POST: api/Payment/Perform
         [Authorize(Roles = Models.User.ClientRole)]
         [HttpPost("Perform")]
-        public async Task<ActionResult<PaymentSession>> PerformPayment([FromBody] PaymentDto paymentDto)
+        public async Task<ActionResult<PaymentSessionViewModel>> PerformPayment([FromBody] PaymentDto paymentDto)
         {
-            var session = await _paymentSessionService.PerformPayment(User.Identity.Name, paymentDto);
+            var sessionViewModel = await _paymentSessionService.PerformPayment(User.Identity.Name, paymentDto);
+            var session =  await _paymentSessionService.LoadSession(User.Identity.Name, paymentDto);
             foreach (INotifyingService service in _notifyingServices)
             {
-                service.Notify(session);
+                await service.Notify(session);
             }
-            return session;
+            return sessionViewModel;
         }
     }
 }

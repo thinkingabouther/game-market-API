@@ -2,9 +2,11 @@ using System;
 using System.Collections.Generic;
 using System.Linq;
 using System.Threading.Tasks;
+using AutoMapper;
 using game_market_API.DTOs;
 using game_market_API.Models;
 using game_market_API.Utilities;
+using game_market_API.ViewModels;
 using Microsoft.AspNetCore.Mvc;
 using Microsoft.EntityFrameworkCore;
 using Microsoft.Extensions.Configuration;
@@ -16,25 +18,20 @@ namespace game_market_API.Services
         private readonly GameMarketDbContext _context;
         private readonly IConfiguration _configuration;
         private readonly IAcquiringService _acquiringService;
+        private readonly IMapper _mapper;
 
-        public PaymentSessionService(GameMarketDbContext context, IConfiguration configuration, IAcquiringService acquiringService)
+        public PaymentSessionService(GameMarketDbContext context, IConfiguration configuration, IAcquiringService acquiringService, IMapper mapper)
         {
             _context = context;
             _configuration = configuration;
             _acquiringService = acquiringService;
+            _mapper = mapper;
         }
 
-        public async Task<PaymentSession> PreparePaymentSession(string clientUserName, PurchaseDto purchaseDto)
+        public async Task<PaymentSessionViewModel> PreparePaymentSession(string clientUserName, PurchaseDto purchaseDto)
         {
             var client = _context.Users.Single(c => c.Username == clientUserName);
-            var game = _context.Games.Include("GameKeys").Single(g => g.ID == purchaseDto.GameID);
-            if (game == null) throw new ItemNotFoundException();
-            var availableKeys = game.GameKeys.Where(gameKey => !gameKey.IsActivated);
-            var gameKeysArray = availableKeys.ToArray();
-            
-            if (gameKeysArray.Length < purchaseDto.GameCount) 
-                throw new NotEnoughKeysException();
-            
+            var availableKeys = LoadAvailableKeys(clientUserName, purchaseDto);
             var paymentSession = new PaymentSession
             {
                 Date = DateTime.Now,
@@ -43,29 +40,37 @@ namespace game_market_API.Services
             };
             for (int i = 0; i < purchaseDto.GameCount; i++)
             {
-                paymentSession.GameKeys.Add(gameKeysArray[i]);
-                gameKeysArray[i].IsActivated = true;
+                AttachKeyToSession(paymentSession, availableKeys[i]);
             }
             _context.PaymentSessions.Add(paymentSession);
             await _context.SaveChangesAsync();
-            return paymentSession;
+            return _mapper.Map<PaymentSessionViewModel>(paymentSession);
+        }
+        
+        
+
+        private void AttachKeyToSession(PaymentSession session, GameKey key)
+        {
+            session.GameKeys.Add(key);
+            key.IsActivated = true;
         }
 
-        public async Task<PaymentSession> PerformPayment(string clientUserName, PaymentDto paymentDto)
+        private GameKey[] LoadAvailableKeys(string clientUserName, PurchaseDto purchaseDto)
         {
+            var game = _context.Games.Include("GameKeys").Single(g => g.ID == purchaseDto.GameID);
+            if (game == null) throw new ItemNotFoundException();
+            var availableKeys = game.GameKeys.Where(gameKey => !gameKey.IsActivated);
+            var gameKeysArray = availableKeys.ToArray();
             
+            if (gameKeysArray.Length < purchaseDto.GameCount) 
+                throw new NotEnoughKeysException();
+            return gameKeysArray;
+        }
+
+        public async Task<PaymentSessionViewModel> PerformPayment(string clientUserName, PaymentDto paymentDto)
+        {
             var isValid = ValidateCardNumber(paymentDto.CardNumber);
-            var session = _context.PaymentSessions.Find(paymentDto.SessionID);
-            if (session == null) throw new ItemNotFoundException();
-            session = _context.PaymentSessions
-                .Include(s => s.Client)
-                .Include(s => s.GameKeys)
-                .ThenInclude(g => g.Game)
-                .ThenInclude(g => g.Vendor)
-                .Single(s => s.ID == paymentDto.SessionID);
-            if (session.Client.Username != clientUserName) throw new WrongClientException();
-            if (session.IsCompleted) throw new SessionCompletedException();
-            
+            var session = await LoadSession(clientUserName, paymentDto);
             var marketShare = double.Parse(_configuration.GetSection("Settings").GetSection("MarketShare").Value);
             var sum = session.GameKeys.Sum(key => key.Game.Price);
             if (!await isValid) throw new InvalidCardException();
@@ -74,6 +79,21 @@ namespace game_market_API.Services
             await _acquiringService.CreditVendor(paymentDto.CardNumber, sum * (1 - marketShare));
             session.IsCompleted = true;
             await _context.SaveChangesAsync();
+            return _mapper.Map<PaymentSessionViewModel>(session);
+        }
+
+        public async Task<PaymentSession> LoadSession(string clientUserName, PaymentDto paymentDto)
+        {
+            var session = _context.PaymentSessions.Find(paymentDto.SessionID);
+            if (session == null) throw new ItemNotFoundException();
+            await Task.Run(() => session = _context.PaymentSessions
+                .Include(s => s.Client)
+                .Include(s => s.GameKeys)
+                .ThenInclude(g => g.Game)
+                .ThenInclude(g => g.Vendor)
+                .Single(s => s.ID == paymentDto.SessionID));
+            if (session.Client.Username != clientUserName) throw new WrongClientException();
+            if (session.IsCompleted) throw new SessionCompletedException();
             return session;
         }
 
