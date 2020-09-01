@@ -9,7 +9,7 @@ This API allows vendors to add their games with keys and clients to buy them
     - Basic CRUD operations to work with Games and GameKeys
     - Buying games via operations over Payment
     - JWT-based authentication for both client and vendor 
-    - [OpenAPI Specification](https://app.swaggerhub.com/apis/thinkingabouther2/game-market_api/v1).
+    - [OpenAPI Specification](https://app.swaggerhub.com/apis/thinkingabouther2/game-market_api/1.2.3)
     - [Exception handling middleware](https://github.com/thinkingabouther/game-market-API/blob/master/GameMarketAPI/Controllers/ErrorController.cs)
     that [logs](https://github.com/thinkingabouther/game-market-API/blob/master/GameMarketAPI/Services/ExceptionLoggingService/RedisLoggingService.cs) unpredicted exception using Redis
     - [Notifying services](https://github.com/thinkingabouther/game-market-API/tree/master/GameMarketAPI/Services/NotifyingService) for both vendor (HTTP) and client (Email). 
