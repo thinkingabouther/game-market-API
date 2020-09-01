@@ -42,7 +42,7 @@ namespace game_market_API.Services.ClientService
             return user;
         }
 
-        public async Task<string> GetToken(User credentials)
+        public async Task<string> GetToken(UserCredentialsForTokenDto credentials)
         {
             var identity = await GetIdentity(credentials);
             if (identity == null)
@@ -62,9 +62,9 @@ namespace game_market_API.Services.ClientService
             return encodedJwt;
         }
 
-        private async Task<ClaimsIdentity> GetIdentity(User credentials)
+        private async Task<ClaimsIdentity> GetIdentity(UserCredentialsForTokenDto credentials)
         {
-            var currentUser = await _context.Users.FirstOrDefaultAsync(x => x.Username == credentials.Username
+            var currentUser = await _context.Users.FirstOrDefaultAsync(x => x.Username == credentials.UserName
                                                                  && x.Password == credentials.Password);
             if (currentUser != null)
             {

@@ -42,7 +42,7 @@ namespace game_market_API.Controllers
         [ProducesResponseType(StatusCodes.Status200OK)]
         [ProducesResponseType(StatusCodes.Status404NotFound)]
         [HttpPost("Token")]
-        public async Task<IActionResult> GetToken([FromBody]User credentials)
+        public async Task<IActionResult> GetToken([FromBody]UserCredentialsForTokenDto credentials)
         {
             var data = await _userService.GetToken(credentials);
             return Ok(new

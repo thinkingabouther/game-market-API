@@ -8,6 +8,6 @@ namespace game_market_API.Services.ClientService
     {
         public Task<User> PostUser(UserCredentialsDto credentials);
 
-        public Task<string> GetToken(User credentials);
+        public Task<string> GetToken(UserCredentialsForTokenDto credentials);
     }
 }
