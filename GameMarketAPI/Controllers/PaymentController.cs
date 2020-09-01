@@ -38,11 +38,11 @@ namespace game_market_API.Controllers
 
         // POST: api/Payment/Perform
         [Authorize(Roles = Models.User.ClientRole)]
-        [HttpPost("Perform")]
-        public async Task<ActionResult<PaymentSessionViewModel>> PerformPayment([FromBody] PaymentDto paymentDto)
+        [HttpPost("Perform/{id}")]
+        public async Task<ActionResult<PaymentSessionViewModel>> PerformPayment(int id, [FromBody] PaymentDto paymentDto)
         {
-            var sessionViewModel = await _paymentSessionService.PerformPayment(User.Identity.Name, paymentDto);
-            var session =  await _paymentSessionService.LoadSession(User.Identity.Name, paymentDto);
+            var sessionViewModel = await _paymentSessionService.PerformPayment(User.Identity.Name, id, paymentDto);
+            var session =  await _paymentSessionService.LoadSession(User.Identity.Name, id, paymentDto);
             foreach (INotifyingService service in _notifyingServices)
             {
                 await service.Notify(session);

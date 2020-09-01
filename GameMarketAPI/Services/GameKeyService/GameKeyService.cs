@@ -4,6 +4,7 @@ using System.Linq;
 using System.Threading.Tasks;
 using AutoMapper;
 using game_market_API.DTOs;
+using game_market_API.ExceptionHandling;
 using game_market_API.Models;
 using game_market_API.Utilities;
 using game_market_API.ViewModels;
@@ -67,9 +68,9 @@ namespace game_market_API.Services
 
         private GameKey MapToEntity(string vendorUserName, GameKeyDto dto)
         {
-            var game = _context.Games.Find(dto.GameID);
+            var game = _context.Games.Include(game => game.Vendor).Single(game => game.ID == dto.GameID);
             if (game == null) throw new ItemNotFoundException();
-            var vendor = _context.Users.Single(user => user.Username == vendorUserName);
+            if (game.Vendor.Username != vendorUserName) throw new WrongVendorException();
             return new GameKey
             {
                 Key = dto.Key,

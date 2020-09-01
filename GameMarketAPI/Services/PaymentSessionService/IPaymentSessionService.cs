@@ -11,7 +11,7 @@ namespace game_market_API.Services
     public interface IPaymentSessionService
     {
         public Task<PaymentSessionViewModel> PreparePaymentSession(string clientUserName, PurchaseDto purchaseDto);
-        public Task<PaymentSessionViewModel> PerformPayment(string clientUserName, PaymentDto paymentDto);
-        public Task<PaymentSession> LoadSession(string clientUserName, PaymentDto paymentDto);
+        public Task<PaymentSessionViewModel> PerformPayment(string clientUserName, int sessionID, PaymentDto paymentDto);
+        public Task<PaymentSession> LoadSession(string clientUserName, int sessionID, PaymentDto paymentDto);
     }
 }

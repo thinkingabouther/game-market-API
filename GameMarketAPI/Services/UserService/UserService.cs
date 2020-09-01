@@ -5,6 +5,7 @@ using System.Linq;
 using System.Security.Claims;
 using System.Threading.Tasks;
 using game_market_API.DTOs;
+using game_market_API.ExceptionHandling;
 using game_market_API.Models;
 using game_market_API.Security;
 using Microsoft.EntityFrameworkCore;
@@ -79,14 +80,5 @@ namespace game_market_API.Services.ClientService
             }
             return null;
         }
-    }
-
-    public class UserNotFoundException : Exception
-    {
-    }
-
-    public class UsernameUnavailableException : Exception
-    {
-        
     }
 }

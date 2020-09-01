@@ -48,10 +48,8 @@ namespace game_market_API.Controllers
         [HttpPatch("{id}")]
         public async Task<IActionResult> PatchGame(int id, GameDto game)
         {
-            //TODO: Validation
-
-            await _gameService.PatchGameAsync(User.Identity.Name, id, game);
             
+            await _gameService.PatchGameAsync(User.Identity.Name, id, game);
             return NoContent();
         }
         
@@ -60,7 +58,6 @@ namespace game_market_API.Controllers
         [HttpPost]
         public async Task<ActionResult<GameViewModel>> PostGame(Game game)
         {
-            //TODO: Validation
             await _gameService.PostGameAsync(User.Identity.Name, game);
             return CreatedAtAction("GetGame", new { id = game.ID }, game);
         }

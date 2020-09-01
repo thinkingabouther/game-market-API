@@ -4,6 +4,7 @@ using System.Linq;
 using System.Threading.Tasks;
 using AutoMapper;
 using game_market_API.DTOs;
+using game_market_API.ExceptionHandling;
 using game_market_API.Models;
 using game_market_API.Utilities;
 using game_market_API.ViewModels;
@@ -67,10 +68,10 @@ namespace game_market_API.Services
             return gameKeysArray;
         }
 
-        public async Task<PaymentSessionViewModel> PerformPayment(string clientUserName, PaymentDto paymentDto)
+        public async Task<PaymentSessionViewModel> PerformPayment(string clientUserName, int sessionID, PaymentDto paymentDto)
         {
             var isValid = ValidateCardNumber(paymentDto.CardNumber);
-            var session = await LoadSession(clientUserName, paymentDto);
+            var session = await LoadSession(clientUserName, sessionID, paymentDto);
             var marketShare = double.Parse(_configuration.GetSection("Settings").GetSection("MarketShare").Value);
             var sum = session.GameKeys.Sum(key => key.Game.Price);
             if (!await isValid) throw new InvalidCardException();
@@ -82,16 +83,16 @@ namespace game_market_API.Services
             return _mapper.Map<PaymentSessionViewModel>(session);
         }
 
-        public async Task<PaymentSession> LoadSession(string clientUserName, PaymentDto paymentDto)
+        public async Task<PaymentSession> LoadSession(string clientUserName, int sessionID, PaymentDto paymentDto)
         {
-            var session = _context.PaymentSessions.Find(paymentDto.SessionID);
+            var session = _context.PaymentSessions.Find(sessionID);
             if (session == null) throw new ItemNotFoundException();
             await Task.Run(() => session = _context.PaymentSessions
                 .Include(s => s.Client)
                 .Include(s => s.GameKeys)
                 .ThenInclude(g => g.Game)
                 .ThenInclude(g => g.Vendor)
-                .Single(s => s.ID == paymentDto.SessionID));
+                .Single(s => s.ID == sessionID));
             if (session.Client.Username != clientUserName) throw new WrongClientException();
             if (session.IsCompleted) throw new SessionCompletedException();
             return session;
@@ -106,25 +107,5 @@ namespace game_market_API.Services
                 .Sum(e => e / 10 + e % 10));
             return sumOfDigits % 10 == 0;
         }
-    }
-
-    public class NotEnoughKeysException : Exception
-    {
-        
-    }
-
-    public class InvalidCardException : Exception
-    {
-        
-    }
-
-    public class SessionCompletedException : Exception
-    {
-        
-    }
-
-    public class WrongClientException : Exception
-    {
-        
     }
 }
