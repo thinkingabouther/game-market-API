@@ -27,11 +27,12 @@ namespace game_market_API.Services
 
         public async Task<IEnumerable<GameViewModel>> GetGamesAsync()
         {
-            var data = _context.Games
+            var data = await _context.Games
                 .Include(g => g.Vendor)
                 .Include(g => g.GameKeys)
                 .ToListAsync();
-            return _mapper.Map<IEnumerable<Game>, IEnumerable<GameViewModel>>(await data);
+            if (data.Count == 0) throw new ItemNotFoundException();
+            return _mapper.Map<IEnumerable<Game>, IEnumerable<GameViewModel>>(data);
         }
 
         public async Task<GameViewModel> GetGameAsync(int id)

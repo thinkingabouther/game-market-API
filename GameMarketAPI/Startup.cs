@@ -1,11 +1,10 @@
 using System;
 using System.Collections.Generic;
+using System.IO;
 using System.Linq;
+using System.Reflection;
 using System.Threading.Tasks;
 using AutoMapper;
-using AutoWrapper;
-using AutoWrapper.Extensions;
-using AutoWrapper.Wrappers;
 using game_market_API.Models;
 using game_market_API.Security;
 using game_market_API.Services;
@@ -23,6 +22,8 @@ using Microsoft.Extensions.DependencyInjection;
 using Microsoft.Extensions.Hosting;
 using Microsoft.Extensions.Logging;
 using Microsoft.IdentityModel.Tokens;
+using Microsoft.OpenApi.Models;
+
 
 namespace game_market_API
 {
@@ -56,10 +57,6 @@ namespace game_market_API
                 });
             services.AddAutoMapper(typeof(Startup));
             services.AddControllers();
-            services.Configure<ApiBehaviorOptions>(options =>
-            {
-                options.InvalidModelStateResponseFactory = context => throw new ApiProblemDetailsException(context.ModelState);
-            });
             services.AddDbContextPool<GameMarketDbContext>(options => options
                 .UseSqlite("Data Source=game-market.db"));
             services.AddScoped<IGameService, GameService>();
@@ -71,7 +68,24 @@ namespace game_market_API
             services.AddScoped<INotifyingService, VendorNotifyingService>();
             services.AddScoped<IExceptionLoggingService, RedisLoggingService>();
 
-            services.AddSwaggerGen();
+            services.AddSwaggerGen(c =>
+            {
+                c.SwaggerDoc("v1", new OpenApiInfo
+                {
+                    Version = "v1",
+                    Title = "game-market-API",
+                    Description = "This API allows vendors to add their games with keys and clients to buy them",
+                    Contact = new OpenApiContact
+                    {
+                        Name = "Arseny Neustroev",
+                        Email = "neustroev.arseny@gmail.com",
+                        Url = new Uri("https://github.com/thinkingabouther"),
+                    }
+                });
+                var xmlFile = $"{Assembly.GetExecutingAssembly().GetName().Name}.xml";
+                var xmlPath = Path.Combine(AppContext.BaseDirectory, xmlFile);
+                c.IncludeXmlComments(xmlPath);
+            });
         }
 
         // This method gets called by the runtime. Use this method to configure the HTTP request pipeline.
@@ -83,7 +97,7 @@ namespace game_market_API
             
             app.UseSwaggerUI(c =>
             {
-                c.SwaggerEndpoint("/swagger/v1/swagger.json", "My API V1");
+                c.SwaggerEndpoint("/swagger/v1/swagger.json", "game-store-API");
             });
             
             // app.UseApiResponseAndExceptionWrapper(new AutoWrapperOptions

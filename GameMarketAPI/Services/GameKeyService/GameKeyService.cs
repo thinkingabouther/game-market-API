@@ -26,12 +26,13 @@ namespace game_market_API.Services
 
         public async Task<IEnumerable<GameKeyViewModel>> GetGameKeysAsync(string vendorUserName)
         {
-            var data= _context.GameKeys
+            var data= await _context.GameKeys
                 .Include(key => key.Game)
                 .ThenInclude(g => g.Vendor)
                 .Where(key => key.Game.Vendor.Username == vendorUserName)
                 .ToListAsync();
-            return _mapper.Map<IEnumerable<GameKey>, IEnumerable<GameKeyViewModel>>(await data);
+            if (data.Count == 0) throw new ItemNotFoundException();
+            return _mapper.Map<IEnumerable<GameKey>, IEnumerable<GameKeyViewModel>>(data);
         }
 
         public async Task<GameKeyViewModel> GetGameKeyAsync(string vendorUserName, int id)
