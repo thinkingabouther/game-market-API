@@ -13,9 +13,8 @@
     <select />
   </component>
   <component name="ChangeListManager">
-    <list default="true" id="dd6b25e1-48b8-424c-982a-d9d87e29ca1e" name="Default Changelist" comment="add migrations in Dockerfile">
+    <list default="true" id="dd6b25e1-48b8-424c-982a-d9d87e29ca1e" name="Default Changelist" comment="add migrations runtime">
       <change beforePath="$PROJECT_DIR$/.idea/.idea.game-market-API/.idea/workspace.xml" beforeDir="false" afterPath="$PROJECT_DIR$/.idea/.idea.game-market-API/.idea/workspace.xml" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/GameMarketAPI/Startup.cs" beforeDir="false" afterPath="$PROJECT_DIR$/GameMarketAPI/Startup.cs" afterDir="false" />
     </list>
     <option name="SHOW_DIALOG" value="false" />
     <option name="HIGHLIGHT_CONFLICTS" value="true" />
@@ -101,8 +100,8 @@
         <option value="$PROJECT_DIR$/GameMarketAPI/Services/NotifyingService/VendorNotifyingService.cs" />
         <option value="$PROJECT_DIR$/GameMarketAPI/GameMarketAPI.csproj" />
         <option value="$PROJECT_DIR$/GameMarketAPI/Controllers/ErrorController.cs" />
-        <option value="$PROJECT_DIR$/Dockerfile" />
         <option value="$PROJECT_DIR$/GameMarketAPI/Startup.cs" />
+        <option value="$PROJECT_DIR$/Dockerfile" />
       </list>
     </option>
   </component>
@@ -275,7 +274,7 @@
       <workItem from="1598974594089" duration="10145000" />
       <workItem from="1598992601092" duration="2483000" />
       <workItem from="1599027430425" duration="134000" />
-      <workItem from="1599027586354" duration="1850000" />
+      <workItem from="1599027586354" duration="2237000" />
     </task>
     <task id="LOCAL-00001" summary="initial with basic CRUD over Game instance">
       <created>1598186835700</created>
@@ -424,7 +423,14 @@
       <option name="project" value="LOCAL" />
       <updated>1599029629666</updated>
     </task>
-    <option name="localTasksCounter" value="22" />
+    <task id="LOCAL-00022" summary="add migrations runtime">
+      <created>1599030123352</created>
+      <option name="number" value="00022" />
+      <option name="presentableId" value="LOCAL-00022" />
+      <option name="project" value="LOCAL" />
+      <updated>1599030123352</updated>
+    </task>
+    <option name="localTasksCounter" value="23" />
     <servers />
   </component>
   <component name="TypeScriptGeneratedFilesManager">
@@ -467,7 +473,8 @@
     <MESSAGE value="update to work with both docker compose and .netcore cli" />
     <MESSAGE value="code cleanup" />
     <MESSAGE value="add migrations in Dockerfile" />
-    <option name="LAST_COMMIT_MESSAGE" value="add migrations in Dockerfile" />
+    <MESSAGE value="add migrations runtime" />
+    <option name="LAST_COMMIT_MESSAGE" value="add migrations runtime" />
   </component>
   <component name="WindowStateProjectService">
     <state x="440" y="187" key="#com.intellij.execution.impl.EditConfigurationsDialog" timestamp="1598899398059">
@@ -611,10 +618,10 @@
       <screen x="0" y="25" width="1680" height="940" />
     </state>
     <state x="0" y="28" width="1680" height="1022" maximized="true" key="VCS.FileHistoryDialog/-226.-1127.2048.1127/0.25.1680.940@0.25.1680.940" timestamp="1598954328927" />
-    <state x="440" y="262" key="Vcs.Push.Dialog.v2" timestamp="1599030111498">
+    <state x="440" y="262" key="Vcs.Push.Dialog.v2" timestamp="1599030126590">
       <screen x="0" y="0" width="1680" height="1050" />
     </state>
-    <state x="440" y="262" key="Vcs.Push.Dialog.v2/-226.-1152.2048.1152/0.0.1680.1050@0.0.1680.1050" timestamp="1599030111498" />
+    <state x="440" y="262" key="Vcs.Push.Dialog.v2/-226.-1152.2048.1152/0.0.1680.1050@0.0.1680.1050" timestamp="1599030126590" />
     <state x="678" y="332" width="342" height="385" key="com.intellij.database.actions.DdlActions$DeleteProvider2$1" timestamp="1598191311497">
       <screen x="0" y="0" width="1680" height="1050" />
     </state>
