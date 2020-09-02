@@ -127,7 +127,11 @@ namespace game_market_API
 
             app.UseEndpoints(endpoints => { endpoints.MapControllers(); });
             
-            //redisService.Connect();
+            using (var scope = app.ApplicationServices.GetRequiredService<IServiceScopeFactory>().CreateScope())
+            {
+                scope.ServiceProvider.GetService<GameMarketDbContext>().Database.Migrate();
+                scope.ServiceProvider.GetService<GameMarketDbContext>().Database.EnsureCreated();
+            } 
         }
     }
 }

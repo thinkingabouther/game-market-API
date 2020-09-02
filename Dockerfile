@@ -11,7 +11,6 @@ COPY . .
 FROM build AS publish
 WORKDIR /src/GameMarketAPI
 RUN dotnet publish -c Release -o /src/publish
-RUN dotnet ef database update
 
 FROM mcr.microsoft.com/dotnet/core/aspnet:3.1 AS runtime
 WORKDIR /app
