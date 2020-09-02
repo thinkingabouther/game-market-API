@@ -11,7 +11,9 @@ namespace game_market_API.Controllers
     [ApiExplorerSettings(IgnoreApi = true)]
     public class ErrorController : ControllerBase
     {
-        
+        public ErrorController()
+        {
+        }
 
         [Route("/error")]
         public ActionResult<ErrorResponse> Error()
@@ -26,6 +28,7 @@ namespace game_market_API.Controllers
                 code = 401;
             else if (exception is BadRequestException)
                 code = 400;
+//            else _exceptionLoggingService.Set(DateTime.Now.ToString("F"), exception);
             
             Response.StatusCode = code;
 
