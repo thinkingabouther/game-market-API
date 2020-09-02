@@ -113,7 +113,7 @@ namespace game_market_API
         }
 
         // This method gets called by the runtime. Use this method to configure the HTTP request pipeline.
-        public void Configure(IApplicationBuilder app, IWebHostEnvironment env, RedisLoggingService redisService)
+        public void Configure(IApplicationBuilder app, IWebHostEnvironment env)
         {
             app.UseExceptionHandler("/error");
             
@@ -127,7 +127,7 @@ namespace game_market_API
 
             app.UseEndpoints(endpoints => { endpoints.MapControllers(); });
             
-            redisService.Connect();
+            //redisService.Connect();
         }
     }
 }

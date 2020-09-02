@@ -1,7 +1,6 @@
-﻿using System;
 using System.Text.Json.Serialization;
 
-namespace Common
+namespace game_market_API.DTOs
 {
     public class Message
     {

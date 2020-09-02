@@ -1,0 +1,221 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<dataSource name="game-market.db">
+  <database-model serializer="dbm" dbms="SQLITE" family-id="SQLITE" format-version="4.19">
+    <root id="1">
+      <ServerVersion>3.31.1</ServerVersion>
+    </root>
+    <schema id="2" parent="1" name="main">
+      <Current>1</Current>
+    </schema>
+    <collation id="3" parent="1" name="BINARY"/>
+    <collation id="4" parent="1" name="NOCASE"/>
+    <collation id="5" parent="1" name="RTRIM"/>
+    <table id="6" parent="2" name="GameKeys"/>
+    <table id="7" parent="2" name="Games"/>
+    <table id="8" parent="2" name="PaymentSessions"/>
+    <table id="9" parent="2" name="Users"/>
+    <table id="10" parent="2" name="__EFMigrationsHistory"/>
+    <table id="11" parent="2" name="sqlite_master">
+      <System>1</System>
+    </table>
+    <table id="12" parent="2" name="sqlite_sequence">
+      <System>1</System>
+    </table>
+    <column id="13" parent="6" name="ID">
+      <Position>1</Position>
+      <DataType>INTEGER|0s</DataType>
+      <NotNull>1</NotNull>
+      <SequenceIdentity>null</SequenceIdentity>
+    </column>
+    <column id="14" parent="6" name="Key">
+      <Position>2</Position>
+      <DataType>TEXT|0s</DataType>
+    </column>
+    <column id="15" parent="6" name="IsActivated">
+      <Position>3</Position>
+      <DataType>INTEGER|0s</DataType>
+      <NotNull>1</NotNull>
+    </column>
+    <column id="16" parent="6" name="GameID">
+      <Position>4</Position>
+      <DataType>INTEGER|0s</DataType>
+      <NotNull>1</NotNull>
+    </column>
+    <column id="17" parent="6" name="PaymentSessionID">
+      <Position>5</Position>
+      <DataType>INTEGER|0s</DataType>
+    </column>
+    <index id="18" parent="6" name="IX_GameKeys_GameID">
+      <ColNames>GameID</ColNames>
+      <ColumnCollations></ColumnCollations>
+    </index>
+    <index id="19" parent="6" name="IX_GameKeys_PaymentSessionID">
+      <ColNames>PaymentSessionID</ColNames>
+      <ColumnCollations></ColumnCollations>
+    </index>
+    <key id="20" parent="6" name="PK_GameKeys">
+      <ColNames>ID</ColNames>
+      <Primary>1</Primary>
+    </key>
+    <foreign-key id="21" parent="6" name="FK_GameKeys_Games_GameID">
+      <ColNames>GameID</ColNames>
+      <RefTableName>Games</RefTableName>
+      <RefKeyName>PK_Games</RefKeyName>
+      <RefColNames>ID</RefColNames>
+      <OnDelete>cascade</OnDelete>
+    </foreign-key>
+    <foreign-key id="22" parent="6" name="FK_GameKeys_PaymentSessions_PaymentSessionID">
+      <ColNames>PaymentSessionID</ColNames>
+      <RefTableName>PaymentSessions</RefTableName>
+      <RefKeyName>PK_PaymentSessions</RefKeyName>
+      <RefColNames>ID</RefColNames>
+      <OnDelete>restrict</OnDelete>
+    </foreign-key>
+    <column id="23" parent="7" name="ID">
+      <Position>1</Position>
+      <DataType>INTEGER|0s</DataType>
+      <NotNull>1</NotNull>
+      <SequenceIdentity>null</SequenceIdentity>
+    </column>
+    <column id="24" parent="7" name="Name">
+      <Position>2</Position>
+      <DataType>TEXT|0s</DataType>
+    </column>
+    <column id="25" parent="7" name="Price">
+      <Position>3</Position>
+      <DataType>REAL|0s</DataType>
+      <NotNull>1</NotNull>
+    </column>
+    <column id="26" parent="7" name="VendorID">
+      <Position>4</Position>
+      <DataType>INTEGER|0s</DataType>
+      <NotNull>1</NotNull>
+    </column>
+    <index id="27" parent="7" name="IX_Games_VendorID">
+      <ColNames>VendorID</ColNames>
+      <ColumnCollations></ColumnCollations>
+    </index>
+    <key id="28" parent="7" name="PK_Games">
+      <ColNames>ID</ColNames>
+      <Primary>1</Primary>
+    </key>
+    <foreign-key id="29" parent="7" name="FK_Games_Users_VendorID">
+      <ColNames>VendorID</ColNames>
+      <RefTableName>Users</RefTableName>
+      <RefKeyName>PK_Users</RefKeyName>
+      <RefColNames>ID</RefColNames>
+      <OnDelete>cascade</OnDelete>
+    </foreign-key>
+    <column id="30" parent="8" name="ID">
+      <Position>1</Position>
+      <DataType>INTEGER|0s</DataType>
+      <NotNull>1</NotNull>
+      <SequenceIdentity>null</SequenceIdentity>
+    </column>
+    <column id="31" parent="8" name="Date">
+      <Position>2</Position>
+      <DataType>TEXT|0s</DataType>
+      <NotNull>1</NotNull>
+    </column>
+    <column id="32" parent="8" name="IsCompleted">
+      <Position>3</Position>
+      <DataType>INTEGER|0s</DataType>
+      <NotNull>1</NotNull>
+    </column>
+    <column id="33" parent="8" name="ClientID">
+      <Position>4</Position>
+      <DataType>INTEGER|0s</DataType>
+    </column>
+    <index id="34" parent="8" name="IX_PaymentSessions_ClientID">
+      <ColNames>ClientID</ColNames>
+      <ColumnCollations></ColumnCollations>
+    </index>
+    <key id="35" parent="8" name="PK_PaymentSessions">
+      <ColNames>ID</ColNames>
+      <Primary>1</Primary>
+    </key>
+    <foreign-key id="36" parent="8" name="FK_PaymentSessions_Users_ClientID">
+      <ColNames>ClientID</ColNames>
+      <RefTableName>Users</RefTableName>
+      <RefKeyName>PK_Users</RefKeyName>
+      <RefColNames>ID</RefColNames>
+      <OnDelete>restrict</OnDelete>
+    </foreign-key>
+    <column id="37" parent="9" name="ID">
+      <Position>1</Position>
+      <DataType>INTEGER|0s</DataType>
+      <NotNull>1</NotNull>
+      <SequenceIdentity>null</SequenceIdentity>
+    </column>
+    <column id="38" parent="9" name="Username">
+      <Position>2</Position>
+      <DataType>TEXT|0s</DataType>
+      <NotNull>1</NotNull>
+    </column>
+    <column id="39" parent="9" name="Password">
+      <Position>3</Position>
+      <DataType>TEXT|0s</DataType>
+      <NotNull>1</NotNull>
+    </column>
+    <column id="40" parent="9" name="Role">
+      <Position>4</Position>
+      <DataType>TEXT|0s</DataType>
+    </column>
+    <index id="41" parent="9" name="IX_Users_Username">
+      <ColNames>Username</ColNames>
+      <ColumnCollations></ColumnCollations>
+      <Unique>1</Unique>
+    </index>
+    <key id="42" parent="9" name="PK_Users">
+      <ColNames>ID</ColNames>
+      <Primary>1</Primary>
+    </key>
+    <column id="43" parent="10" name="MigrationId">
+      <Position>1</Position>
+      <DataType>TEXT|0s</DataType>
+      <NotNull>1</NotNull>
+    </column>
+    <column id="44" parent="10" name="ProductVersion">
+      <Position>2</Position>
+      <DataType>TEXT|0s</DataType>
+      <NotNull>1</NotNull>
+    </column>
+    <index id="45" parent="10" name="sqlite_autoindex___EFMigrationsHistory_1">
+      <NameSurrogate>1</NameSurrogate>
+      <ColNames>MigrationId</ColNames>
+      <ColumnCollations></ColumnCollations>
+      <Unique>1</Unique>
+    </index>
+    <key id="46" parent="10" name="PK___EFMigrationsHistory">
+      <ColNames>MigrationId</ColNames>
+      <Primary>1</Primary>
+      <UnderlyingIndexName>sqlite_autoindex___EFMigrationsHistory_1</UnderlyingIndexName>
+    </key>
+    <column id="47" parent="11" name="type">
+      <Position>1</Position>
+      <DataType>text|0s</DataType>
+    </column>
+    <column id="48" parent="11" name="name">
+      <Position>2</Position>
+      <DataType>text|0s</DataType>
+    </column>
+    <column id="49" parent="11" name="tbl_name">
+      <Position>3</Position>
+      <DataType>text|0s</DataType>
+    </column>
+    <column id="50" parent="11" name="rootpage">
+      <Position>4</Position>
+      <DataType>int|0s</DataType>
+    </column>
+    <column id="51" parent="11" name="sql">
+      <Position>5</Position>
+      <DataType>text|0s</DataType>
+    </column>
+    <column id="52" parent="12" name="name">
+      <Position>1</Position>
+    </column>
+    <column id="53" parent="12" name="seq">
+      <Position>2</Position>
+    </column>
+  </database-model>
+</dataSource>

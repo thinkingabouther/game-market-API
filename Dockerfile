@@ -3,8 +3,6 @@ FROM mcr.microsoft.com/dotnet/core/sdk:3.1 AS build
 WORKDIR /src
 COPY *.sln .
 COPY GameMarketAPI/*.csproj GameMarketAPI/
-COPY Common/*.csproj Common/
-COPY VendorNotifier/*.csproj VendorNotifier/
 
 RUN dotnet restore
 COPY . .
@@ -18,4 +16,4 @@ FROM mcr.microsoft.com/dotnet/core/aspnet:3.1 AS runtime
 WORKDIR /app
 COPY --from=publish /src/publish .
 # heroku uses the following
-ENTRYPOINT ["dotnet", "GameMarketAPI.dll", "--urls", "http://*:5000;http://*:5001"]
+CMD ASPNETCORE_URLS=http://*:$PORT dotnet LimeHomeTest.Web.dll

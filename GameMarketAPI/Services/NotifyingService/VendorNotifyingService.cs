@@ -3,11 +3,11 @@ using System.Linq;
 using System.Security.Cryptography;
 using System.Text;
 using System.Threading.Tasks;
-using Common;
 using game_market_API.Models;
 using Microsoft.Extensions.Configuration;
 using Newtonsoft.Json;
 using RabbitMQ.Client;
+using Message = game_market_API.DTOs.Message;
 
 namespace game_market_API.Services.NotifyingService
 {
