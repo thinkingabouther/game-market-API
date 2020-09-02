@@ -39,7 +39,6 @@ namespace game_market_API
         // This method gets called by the runtime. Use this method to add services to the container.
         public void ConfigureServices(IServiceCollection services)
         {
-            services.AddSingleton<RedisLoggingService>();
             services.AddAuthentication(JwtBearerDefaults.AuthenticationScheme)
                 .AddJwtBearer(options =>
                 {
@@ -113,7 +112,7 @@ namespace game_market_API
         }
 
         // This method gets called by the runtime. Use this method to configure the HTTP request pipeline.
-        public void Configure(IApplicationBuilder app, IWebHostEnvironment env, RedisLoggingService redisService)
+        public void Configure(IApplicationBuilder app, IWebHostEnvironment env)
         {
             app.UseExceptionHandler("/error");
             
@@ -127,7 +126,13 @@ namespace game_market_API
 
             app.UseEndpoints(endpoints => { endpoints.MapControllers(); });
             
-            redisService.Connect();
+            //redisService.Connect();
+            
+            using (var scope = app.ApplicationServices.GetRequiredService<IServiceScopeFactory>().CreateScope())
+            {
+                scope.ServiceProvider.GetService<GameMarketDbContext>().Database.Migrate();
+                scope.ServiceProvider.GetService<GameMarketDbContext>().Database.EnsureCreated();
+            } 
         }
     }
 }
