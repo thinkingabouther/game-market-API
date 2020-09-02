@@ -14,22 +14,8 @@
   </component>
   <component name="ChangeListManager">
     <list default="true" id="dd6b25e1-48b8-424c-982a-d9d87e29ca1e" name="Default Changelist" comment="restricted adding and deleting keys only for authorized vendors">
-      <change afterPath="$PROJECT_DIR$/GameMarketAPI/DTOs/Message.cs" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/Common/Common.csproj" beforeDir="false" />
-      <change beforePath="$PROJECT_DIR$/Common/Message.cs" beforeDir="false" />
-      <change beforePath="$PROJECT_DIR$/Dockerfile" beforeDir="false" afterPath="$PROJECT_DIR$/Dockerfile" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/GameMarketAPI/GameMarketAPI.csproj" beforeDir="false" afterPath="$PROJECT_DIR$/GameMarketAPI/GameMarketAPI.csproj" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/GameMarketAPI/Services/NotifyingService/VendorNotifyingService.cs" beforeDir="false" afterPath="$PROJECT_DIR$/GameMarketAPI/Services/NotifyingService/VendorNotifyingService.cs" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/README.md" beforeDir="false" />
-      <change beforePath="$PROJECT_DIR$/VendorNotifier/FailurePostProcessors/IFailurePostProcessor.cs" beforeDir="false" />
-      <change beforePath="$PROJECT_DIR$/VendorNotifier/FailurePostProcessors/RabbitMessageRePublisher.cs" beforeDir="false" />
-      <change beforePath="$PROJECT_DIR$/VendorNotifier/MessageConsumer.cs" beforeDir="false" />
-      <change beforePath="$PROJECT_DIR$/VendorNotifier/Program.cs" beforeDir="false" />
-      <change beforePath="$PROJECT_DIR$/VendorNotifier/Requesters/IRequester.cs" beforeDir="false" />
-      <change beforePath="$PROJECT_DIR$/VendorNotifier/Requesters/PostRequester.cs" beforeDir="false" />
-      <change beforePath="$PROJECT_DIR$/VendorNotifier/VendorNotifier.csproj" beforeDir="false" />
-      <change beforePath="$PROJECT_DIR$/VendorNotifier/appsettings.json" beforeDir="false" />
-      <change beforePath="$PROJECT_DIR$/game-market-API.sln" beforeDir="false" afterPath="$PROJECT_DIR$/game-market-API.sln" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/.github/workflows/main.yml" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/.idea/.idea.game-market-API/.idea/workspace.xml" beforeDir="false" afterPath="$PROJECT_DIR$/.idea/.idea.game-market-API/.idea/workspace.xml" afterDir="false" />
     </list>
     <option name="SHOW_DIALOG" value="false" />
     <option name="HIGHLIGHT_CONFLICTS" value="true" />
@@ -107,15 +93,15 @@
         <option value="$PROJECT_DIR$/GameMarketAPI/Dockerfile" />
         <option value="$PROJECT_DIR$/docker-compose.yml" />
         <option value="$PROJECT_DIR$/GameMarketAPI/Services/ExceptionLoggingService/RedisLoggingService.cs" />
-        <option value="$PROJECT_DIR$/GameMarketAPI/Controllers/ErrorController.cs" />
         <option value="$PROJECT_DIR$/game-market-API.sln" />
         <option value="$PROJECT_DIR$/GameMarketAPI/DTOs/GameDto.cs" />
         <option value="$PROJECT_DIR$/GameMarketAPI/appsettings.json" />
-        <option value="$PROJECT_DIR$/GameMarketAPI/Startup.cs" />
         <option value="$PROJECT_DIR$/GameMarketAPI/Properties/launchSettings.json" />
         <option value="$PROJECT_DIR$/GameMarketAPI/DTOs/Message.cs" />
         <option value="$PROJECT_DIR$/GameMarketAPI/Services/NotifyingService/VendorNotifyingService.cs" />
         <option value="$PROJECT_DIR$/GameMarketAPI/GameMarketAPI.csproj" />
+        <option value="$PROJECT_DIR$/GameMarketAPI/Startup.cs" />
+        <option value="$PROJECT_DIR$/GameMarketAPI/Controllers/ErrorController.cs" />
         <option value="$PROJECT_DIR$/Dockerfile" />
       </list>
     </option>
@@ -289,7 +275,7 @@
       <workItem from="1598974594089" duration="10145000" />
       <workItem from="1598992601092" duration="2483000" />
       <workItem from="1599027430425" duration="134000" />
-      <workItem from="1599027586354" duration="285000" />
+      <workItem from="1599027586354" duration="1392000" />
     </task>
     <task id="LOCAL-00001" summary="initial with basic CRUD over Game instance">
       <created>1598186835700</created>
@@ -617,10 +603,10 @@
       <screen x="0" y="25" width="1680" height="940" />
     </state>
     <state x="0" y="28" width="1680" height="1022" maximized="true" key="VCS.FileHistoryDialog/-226.-1127.2048.1127/0.25.1680.940@0.25.1680.940" timestamp="1598954328927" />
-    <state x="440" y="262" key="Vcs.Push.Dialog.v2" timestamp="1598993486817">
+    <state x="440" y="262" key="Vcs.Push.Dialog.v2" timestamp="1599029363979">
       <screen x="0" y="0" width="1680" height="1050" />
     </state>
-    <state x="440" y="262" key="Vcs.Push.Dialog.v2/-226.-1152.2048.1152/0.0.1680.1050@0.0.1680.1050" timestamp="1598993486817" />
+    <state x="440" y="262" key="Vcs.Push.Dialog.v2/-226.-1152.2048.1152/0.0.1680.1050@0.0.1680.1050" timestamp="1599029363979" />
     <state x="678" y="332" width="342" height="385" key="com.intellij.database.actions.DdlActions$DeleteProvider2$1" timestamp="1598191311497">
       <screen x="0" y="0" width="1680" height="1050" />
     </state>
@@ -722,13 +708,13 @@
         </line-breakpoint>
         <line-breakpoint enabled="true" type="DotNet Breakpoints">
           <url>file://$PROJECT_DIR$/GameMarketAPI/Controllers/ErrorController.cs</url>
-          <line>23</line>
+          <line>20</line>
           <properties documentPath="$PROJECT_DIR$/GameMarketAPI/Controllers/ErrorController.cs" initialLine="14">
             <startOffsets>
-              <option value="724" />
+              <option value="544" />
             </startOffsets>
             <endOffsets>
-              <option value="791" />
+              <option value="611" />
             </endOffsets>
           </properties>
           <option name="timeStamp" value="44" />
