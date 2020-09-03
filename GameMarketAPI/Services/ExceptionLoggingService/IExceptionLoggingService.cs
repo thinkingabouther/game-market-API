@@ -10,5 +10,7 @@ namespace game_market_API.Services.ExceptionLoggingService
         public Task<string> Get(string key);
         public Task<string> GetExceptionLog();
 
+        public void Connect();
+
     }
 }

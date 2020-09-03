@@ -9,22 +9,33 @@ namespace game_market_API.Services.ExceptionLoggingService
 {
     public class RedisLoggingService : IExceptionLoggingService
     {
-        private readonly string _redisHost;
-        private readonly int _redisPort;
+        private readonly string _redisConnectionString;
         private ConnectionMultiplexer _redis;
 
         public RedisLoggingService(IConfiguration config)
         {
-            _redisHost = config["Settings:Redis:Host"];
-            _redisPort = Convert.ToInt32(config["Settings:Redis:Port"]);
+            _redisConnectionString = GetConnectionString(config);
+        }
+
+        private string GetConnectionString(IConfiguration config)
+        {
+            var redisUrlString = Environment.GetEnvironmentVariable("REDIS_URL");
+            if (string.IsNullOrEmpty(redisUrlString))
+            {
+                var redisHost = config["Settings:Redis:Host"];
+                var redisPort = Convert.ToInt32(config["Settings:Redis:Port"]);
+                return $"{redisHost}:{redisPort}";
+            }
+            var redisUri = new Uri(redisUrlString);
+            var userInfo = redisUri.UserInfo.Split(":");
+            return $"{redisUri.Host}:{redisUri.Port}, password={userInfo[1]}";
         }
         
         public void Connect()
         {
             try
             {
-                var configString = $"{_redisHost}:{_redisPort}";
-                _redis = ConnectionMultiplexer.Connect(configString);
+                _redis = ConnectionMultiplexer.Connect(_redisConnectionString);
             }
             catch (RedisConnectionException err)
             {
@@ -49,7 +60,7 @@ namespace game_market_API.Services.ExceptionLoggingService
         {
             var result = new List<KeyValuePair<string, string>>();
             var endpoints = _redis.GetEndPoints();
-            var server = _redis.GetServer($"{_redisHost}:{_redisPort}");
+            var server = _redis.GetServer(_redisConnectionString);
 
             var keys = server.Keys();
             foreach (var key in keys)
