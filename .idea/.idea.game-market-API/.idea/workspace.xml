@@ -13,10 +13,11 @@
     <select />
   </component>
   <component name="ChangeListManager">
-    <list default="true" id="dd6b25e1-48b8-424c-982a-d9d87e29ca1e" name="Default Changelist" comment="something">
-      <change afterPath="$PROJECT_DIR$/VendorNotifier/DTOs/Message.cs" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/.idea/.idea.game-market-API/.idea/workspace.xml" beforeDir="false" afterPath="$PROJECT_DIR$/.idea/.idea.game-market-API/.idea/workspace.xml" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/game-market-API.sln" beforeDir="false" afterPath="$PROJECT_DIR$/game-market-API.sln" afterDir="false" />
+    <list default="true" id="dd6b25e1-48b8-424c-982a-d9d87e29ca1e" name="Default Changelist" comment="Some changes">
+      <change beforePath="$PROJECT_DIR$/Dockerfile" beforeDir="false" afterPath="$PROJECT_DIR$/Dockerfile" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/GameMarketAPI/Services/ExceptionLoggingService/RedisLoggingService.cs" beforeDir="false" afterPath="$PROJECT_DIR$/GameMarketAPI/Services/ExceptionLoggingService/RedisLoggingService.cs" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/GameMarketAPI/Startup.cs" beforeDir="false" afterPath="$PROJECT_DIR$/GameMarketAPI/Startup.cs" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/README.md" beforeDir="false" afterPath="$PROJECT_DIR$/README.md" afterDir="false" />
     </list>
     <option name="SHOW_DIALOG" value="false" />
     <option name="HIGHLIGHT_CONFLICTS" value="true" />
@@ -96,7 +97,6 @@
         <option value="$PROJECT_DIR$/GameMarketAPI/GameMarketAPI.csproj" />
         <option value="$PROJECT_DIR$/GameMarketAPI/Controllers/ErrorController.cs" />
         <option value="$PROJECT_DIR$/Dockerfile" />
-        <option value="$PROJECT_DIR$/GameMarketAPI/Startup.cs" />
         <option value="$PROJECT_DIR$/VendorNotifier/DTOs/Message.cs" />
         <option value="$PROJECT_DIR$/VendorNotifier/FailurePostProcessors/IFailurePostProcessor.cs" />
         <option value="$PROJECT_DIR$/VendorNotifier/FailurePostProcessors/RabbitMessageRePublisher.cs" />
@@ -104,6 +104,7 @@
         <option value="$PROJECT_DIR$/VendorNotifier/Requesters/IRequester.cs" />
         <option value="$PROJECT_DIR$/VendorNotifier/Requesters/PostRequester.cs" />
         <option value="$PROJECT_DIR$/VendorNotifier/MessageConsumer.cs" />
+        <option value="$PROJECT_DIR$/GameMarketAPI/Startup.cs" />
       </list>
     </option>
   </component>
@@ -439,7 +440,14 @@
       <option name="project" value="LOCAL" />
       <updated>1599159499380</updated>
     </task>
-    <option name="localTasksCounter" value="24" />
+    <task id="LOCAL-00024" summary="Some changes">
+      <created>1599160739412</created>
+      <option name="number" value="00024" />
+      <option name="presentableId" value="LOCAL-00024" />
+      <option name="project" value="LOCAL" />
+      <updated>1599160739412</updated>
+    </task>
+    <option name="localTasksCounter" value="25" />
     <servers />
   </component>
   <component name="TypeScriptGeneratedFilesManager">
@@ -484,7 +492,8 @@
     <MESSAGE value="add migrations in Dockerfile" />
     <MESSAGE value="add migrations runtime" />
     <MESSAGE value="something" />
-    <option name="LAST_COMMIT_MESSAGE" value="something" />
+    <MESSAGE value="Some changes" />
+    <option name="LAST_COMMIT_MESSAGE" value="Some changes" />
   </component>
   <component name="WindowStateProjectService">
     <state x="440" y="187" key="#com.intellij.execution.impl.EditConfigurationsDialog" timestamp="1598899398059">
@@ -636,6 +645,10 @@
       <screen x="0" y="0" width="1680" height="1050" />
     </state>
     <state x="678" y="332" width="342" height="385" key="com.intellij.database.actions.DdlActions$DeleteProvider2$1/-226.-1152.2048.1152/0.0.1680.1050@0.0.1680.1050" timestamp="1598191311497" />
+    <state x="641" y="457" key="com.intellij.openapi.vcs.update.UpdateOrStatusOptionsDialogupdate-v2" timestamp="1599160908125">
+      <screen x="0" y="0" width="1680" height="1050" />
+    </state>
+    <state x="641" y="457" key="com.intellij.openapi.vcs.update.UpdateOrStatusOptionsDialogupdate-v2/-226.-1152.2048.1152/0.0.1680.1050@0.0.1680.1050" timestamp="1599160908125" />
     <state x="662" y="423" key="git4idea.remote.GitConfigureRemotesDialog" timestamp="1598186888685">
       <screen x="0" y="0" width="1680" height="1050" />
     </state>
