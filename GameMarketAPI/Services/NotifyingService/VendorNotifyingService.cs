@@ -28,7 +28,8 @@ namespace game_market_API.Services.NotifyingService
         private void InitializeExchange()
         {
             var credentials = _configuration.GetSection("Settings").GetSection("RabbitMQCredentials");
-            var host = credentials.GetSection("Host").Value;
+            var host = Environment.GetEnvironmentVariable("CLOUDAMQP_URL");
+            if (string.IsNullOrEmpty(host)) host = credentials.GetSection("Host").Value;
             ExchangeName = credentials.GetSection("Exchange").Value;
             RoutingKey = credentials.GetSection("RoutingKey").Value;
             _channel = new ConnectionFactory{HostName = host}.CreateConnection().CreateModel();
