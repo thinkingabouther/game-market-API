@@ -131,6 +131,7 @@ namespace game_market_API
             {
                 scope.ServiceProvider.GetService<GameMarketDbContext>().Database.Migrate();
                 scope.ServiceProvider.GetService<GameMarketDbContext>().Database.EnsureCreated();
+                
             } 
         }
     }
