@@ -16,6 +16,8 @@ This API allows vendors to add their games with keys and clients to buy them
     [Hash](https://github.com/thinkingabouther/game-market-API/blob/master/GameMarketAPI/Services/NotifyingService/VendorNotifyingService.csv) is sent to the vendor in order to verify the message on the vendor side. 
     Hash is computed based on the body of the request + the secret that might be configured in appconfig.json
     - [Dockerfile](https://github.com/thinkingabouther/game-market-API/blob/master/Dockerfile) and [docker-compose](https://github.com/thinkingabouther/game-market-API/blob/master/docker-compose.yml)
+    - Configured [CI](https://github.com/thinkingabouther/game-market-API/blob/master/.github/workflows/main.yml) using GitHub Actions
+    - Published [the app](https://xsolla-game-store-api.herokuapp.com/api/Game) to Heroku using CI and Docker
 
 - **VendorNotifier**    
   - Separate service that uses RabbitMQ to receive messages from the main API and resend messages in case the request was unsuccessful
@@ -51,4 +53,7 @@ dotnet run --project GameMarketAPI
 ```
 dotnet run --project VendorNotifier
 ```
+
+### Using published version
+[The app](https://xsolla-game-store-api.herokuapp.com/api/Game) is published to Heroku, use [specification](https://app.swaggerhub.com/apis/thinkingabouther2/game-market_api/1.2.3) to access all the possible requests
 
