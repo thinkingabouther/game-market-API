@@ -13,8 +13,10 @@
     <select />
   </component>
   <component name="ChangeListManager">
-    <list default="true" id="dd6b25e1-48b8-424c-982a-d9d87e29ca1e" name="Default Changelist" comment="add migrations runtime">
+    <list default="true" id="dd6b25e1-48b8-424c-982a-d9d87e29ca1e" name="Default Changelist" comment="something">
+      <change afterPath="$PROJECT_DIR$/VendorNotifier/DTOs/Message.cs" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/.idea/.idea.game-market-API/.idea/workspace.xml" beforeDir="false" afterPath="$PROJECT_DIR$/.idea/.idea.game-market-API/.idea/workspace.xml" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/game-market-API.sln" beforeDir="false" afterPath="$PROJECT_DIR$/game-market-API.sln" afterDir="false" />
     </list>
     <option name="SHOW_DIALOG" value="false" />
     <option name="HIGHLIGHT_CONFLICTS" value="true" />
@@ -51,13 +53,6 @@
   <component name="IdeDocumentHistory">
     <option name="CHANGED_PATHS">
       <list>
-        <option value="$PROJECT_DIR$/GameMarketAPI/Services/GameKeyService/IGameKeyService.cs" />
-        <option value="$PROJECT_DIR$/GameMarketAPI/ViewModels/PaymentSessionViewModel.cs" />
-        <option value="$PROJECT_DIR$/GameMarketAPI/AutoMappingProfile.cs" />
-        <option value="$PROJECT_DIR$/GameMarketAPI/Services/NotifyingService/ClientNotifyingService.cs" />
-        <option value="$PROJECT_DIR$/GameMarketAPI/Services/NotifyingService/INotifyingService.cs" />
-        <option value="$PROJECT_DIR$/GameMarketAPI/Services/UserService/IUserService.cs" />
-        <option value="$PROJECT_DIR$/GameMarketAPI/Utilities/ValidateModelAttribute.cs" />
         <option value="$PROJECT_DIR$/GameMarketAPI/DTOs/UserCredentialsDto.cs" />
         <option value="$PROJECT_DIR$/GameMarketAPI/DTOs/PaymentDto.cs" />
         <option value="$PROJECT_DIR$/GameMarketAPI/Services/PaymentSessionService/IPaymentSessionService.cs" />
@@ -100,8 +95,15 @@
         <option value="$PROJECT_DIR$/GameMarketAPI/Services/NotifyingService/VendorNotifyingService.cs" />
         <option value="$PROJECT_DIR$/GameMarketAPI/GameMarketAPI.csproj" />
         <option value="$PROJECT_DIR$/GameMarketAPI/Controllers/ErrorController.cs" />
-        <option value="$PROJECT_DIR$/GameMarketAPI/Startup.cs" />
         <option value="$PROJECT_DIR$/Dockerfile" />
+        <option value="$PROJECT_DIR$/GameMarketAPI/Startup.cs" />
+        <option value="$PROJECT_DIR$/VendorNotifier/DTOs/Message.cs" />
+        <option value="$PROJECT_DIR$/VendorNotifier/FailurePostProcessors/IFailurePostProcessor.cs" />
+        <option value="$PROJECT_DIR$/VendorNotifier/FailurePostProcessors/RabbitMessageRePublisher.cs" />
+        <option value="$PROJECT_DIR$/VendorNotifier/Program.cs" />
+        <option value="$PROJECT_DIR$/VendorNotifier/Requesters/IRequester.cs" />
+        <option value="$PROJECT_DIR$/VendorNotifier/Requesters/PostRequester.cs" />
+        <option value="$PROJECT_DIR$/VendorNotifier/MessageConsumer.cs" />
       </list>
     </option>
   </component>
@@ -430,7 +432,14 @@
       <option name="project" value="LOCAL" />
       <updated>1599030123352</updated>
     </task>
-    <option name="localTasksCounter" value="23" />
+    <task id="LOCAL-00023" summary="something">
+      <created>1599159499380</created>
+      <option name="number" value="00023" />
+      <option name="presentableId" value="LOCAL-00023" />
+      <option name="project" value="LOCAL" />
+      <updated>1599159499380</updated>
+    </task>
+    <option name="localTasksCounter" value="24" />
     <servers />
   </component>
   <component name="TypeScriptGeneratedFilesManager">
@@ -474,7 +483,8 @@
     <MESSAGE value="code cleanup" />
     <MESSAGE value="add migrations in Dockerfile" />
     <MESSAGE value="add migrations runtime" />
-    <option name="LAST_COMMIT_MESSAGE" value="add migrations runtime" />
+    <MESSAGE value="something" />
+    <option name="LAST_COMMIT_MESSAGE" value="something" />
   </component>
   <component name="WindowStateProjectService">
     <state x="440" y="187" key="#com.intellij.execution.impl.EditConfigurationsDialog" timestamp="1598899398059">
@@ -618,10 +628,10 @@
       <screen x="0" y="25" width="1680" height="940" />
     </state>
     <state x="0" y="28" width="1680" height="1022" maximized="true" key="VCS.FileHistoryDialog/-226.-1127.2048.1127/0.25.1680.940@0.25.1680.940" timestamp="1598954328927" />
-    <state x="440" y="262" key="Vcs.Push.Dialog.v2" timestamp="1599030126590">
+    <state x="440" y="262" key="Vcs.Push.Dialog.v2" timestamp="1599159500721">
       <screen x="0" y="0" width="1680" height="1050" />
     </state>
-    <state x="440" y="262" key="Vcs.Push.Dialog.v2/-226.-1152.2048.1152/0.0.1680.1050@0.0.1680.1050" timestamp="1599030126590" />
+    <state x="440" y="262" key="Vcs.Push.Dialog.v2/-226.-1152.2048.1152/0.0.1680.1050@0.0.1680.1050" timestamp="1599159500721" />
     <state x="678" y="332" width="342" height="385" key="com.intellij.database.actions.DdlActions$DeleteProvider2$1" timestamp="1598191311497">
       <screen x="0" y="0" width="1680" height="1050" />
     </state>

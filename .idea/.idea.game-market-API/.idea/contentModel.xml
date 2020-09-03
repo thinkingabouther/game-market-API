@@ -114,6 +114,31 @@
         </e>
       </e>
       <e p="packages" t="ExcludeRecursive" />
+      <e p="VendorNotifier" t="IncludeRecursive">
+        <e p="appsettings.json" t="Include" />
+        <e p="bin" t="ExcludeRecursive" />
+        <e p="DTOs" t="Include">
+          <e p="Message.cs" t="Include" />
+        </e>
+        <e p="FailurePostProcessors" t="Include">
+          <e p="IFailurePostProcessor.cs" t="Include" />
+          <e p="RabbitMessageRePublisher.cs" t="Include" />
+        </e>
+        <e p="MessageConsumer.cs" t="Include" />
+        <e p="obj" t="ExcludeRecursive">
+          <e p="Debug" t="Include">
+            <e p="netcoreapp3.1" t="Include">
+              <e p="VendorNotifier.AssemblyInfo.cs" t="Include" />
+            </e>
+          </e>
+        </e>
+        <e p="Program.cs" t="Include" />
+        <e p="Requesters" t="Include">
+          <e p="IRequester.cs" t="Include" />
+          <e p="PostRequester.cs" t="Include" />
+        </e>
+        <e p="VendorNotifier.csproj" t="IncludeRecursive" />
+      </e>
     </e>
   </component>
 </project>
