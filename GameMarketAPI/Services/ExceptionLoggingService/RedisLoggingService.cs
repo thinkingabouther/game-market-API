@@ -57,6 +57,7 @@ namespace game_market_API.Services.ExceptionLoggingService
                 result.Add(new KeyValuePair<string, string>(key, await Get(key)));
             }
             return string.Join('\n', result);
+            
         }
     }
 }
